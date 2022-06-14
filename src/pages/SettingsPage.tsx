@@ -1,9 +1,17 @@
-import React, { FC } from 'react'
+import { Layout } from "antd";
+import React, { FC } from "react";
 
-const SettingsPage : FC = () => {
+const SettingsPage: FC = () => {
   return (
-    <div>SettingsPage</div>
-  )
-}
+    <Layout
+      className="site-layout"
+      style={{
+        marginLeft: 300,
+      }}
+    >
+      Настройки
+    </Layout>
+  );
+};
 
-export default SettingsPage
+export default SettingsPage;
