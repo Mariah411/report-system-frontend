@@ -57,12 +57,7 @@ const TasksPage: FC = () => {
   // <MySider />
   return (
     <Layout className="site-layout layout_m-300">
-      <Content
-        style={{
-          margin: "24px 16px 0",
-          overflow: "initial",
-        }}
-      >
+      <Content className="content_m-20">
         <div className="site-layout-background" style={{ padding: 24 }}>
           <Segmented
             options={["Активные", "Архив отчетов"]}
