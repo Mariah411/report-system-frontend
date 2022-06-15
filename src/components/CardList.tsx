@@ -6,20 +6,6 @@ import { cardsData1, cardsData2, MyData } from "../data/cardsData";
 type Props = { data: MyData[]; buttonText: string; typeTask: string };
 
 const CardList = (props: Props) => {
-  /*let dataArr: MyData[] = cardsData1
-
-  useEffect(() => {
-    dataArr = (props.typeTask == 'Активные') ? cardsData1 : cardsData2
-
-  }, [])
-
-  useEffect(() => {
-    dataArr = (props.typeTask == 'Активные') ? cardsData1 : cardsData2
-    console.log(dataArr)
-  }, [props.typeTask])
-
-
-    //console.log(props.data)*/
   return (
     <List
       itemLayout="vertical"
