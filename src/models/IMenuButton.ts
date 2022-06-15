@@ -6,7 +6,7 @@ export interface IMenuButton {
   key: string;
   icon: any;
   label: string;
-  isBadge: boolean;
+  isBadge?: boolean;
   link: RouteNames;
   //clickable: boolean
 }

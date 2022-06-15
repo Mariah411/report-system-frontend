@@ -19,7 +19,6 @@ export let menuButtonsUser: IMenuButton[] = [
     key: "user",
     icon: UserOutlined,
     label: "",
-    isBadge: false,
     link: RouteNames.USER_ID,
   },
   {
@@ -27,7 +26,6 @@ export let menuButtonsUser: IMenuButton[] = [
     key: "place",
     icon: HomeOutlined,
     label: "",
-    isBadge: false,
     link: RouteNames.USER_ID,
   },
   {
@@ -35,7 +33,6 @@ export let menuButtonsUser: IMenuButton[] = [
     key: "info",
     icon: InfoCircleOutlined,
     label: "Мой профиль",
-    isBadge: false,
     link: RouteNames.USER_ID,
   },
   {
@@ -51,7 +48,6 @@ export let menuButtonsUser: IMenuButton[] = [
     key: "programms",
     icon: FileDoneOutlined,
     label: "Образовательные программы",
-    isBadge: false,
     link: RouteNames.PROGRAMMS,
   },
   {
@@ -59,7 +55,6 @@ export let menuButtonsUser: IMenuButton[] = [
     key: "events",
     icon: CalendarOutlined,
     label: "Мероприятия",
-    isBadge: false,
     link: RouteNames.EVENTS,
   },
   // { key:  "logout",  icon: <PoweroffOutlined />, label: "Выйти" },
@@ -71,7 +66,6 @@ export let menuButtonsAdmin: IMenuButton[] = [
     key: "user",
     icon: UserOutlined,
     label: "",
-    isBadge: false,
     link: RouteNames.USER_ID,
   },
   {
@@ -79,7 +73,6 @@ export let menuButtonsAdmin: IMenuButton[] = [
     key: "admin",
     icon: CrownOutlined,
     label: "Администратор",
-    isBadge: false,
     link: RouteNames.USER_ID,
   },
   {
@@ -87,7 +80,6 @@ export let menuButtonsAdmin: IMenuButton[] = [
     key: "info",
     icon: InfoCircleOutlined,
     label: "Мой профиль",
-    isBadge: false,
     link: RouteNames.USER_ID,
   },
   {
@@ -95,7 +87,6 @@ export let menuButtonsAdmin: IMenuButton[] = [
     key: "tasks",
     icon: ProfileOutlined,
     label: "Задания",
-    isBadge: true,
     link: RouteNames.TASKS,
   },
   {
@@ -103,7 +94,6 @@ export let menuButtonsAdmin: IMenuButton[] = [
     key: "events",
     icon: CalendarOutlined,
     label: "Мероприятия",
-    isBadge: false,
     link: RouteNames.EVENTS,
   },
   {
@@ -111,7 +101,6 @@ export let menuButtonsAdmin: IMenuButton[] = [
     key: "settings",
     icon: SettingOutlined,
     label: "Управление системой",
-    isBadge: false,
     link: RouteNames.SETTINGS,
   },
   //{ key:  "logout",  icon: <PoweroffOutlined />, label: "Выйти"},
@@ -123,7 +112,6 @@ let menuButtonsUserAdmin: IMenuButton[] = [
     key: "user",
     icon: UserOutlined,
     label: "",
-    isBadge: false,
     link: RouteNames.USER_ID,
   },
   {
@@ -131,7 +119,6 @@ let menuButtonsUserAdmin: IMenuButton[] = [
     key: "admin",
     icon: CrownOutlined,
     label: "Администратор",
-    isBadge: false,
     link: RouteNames.USER_ID,
   },
   {
@@ -139,7 +126,6 @@ let menuButtonsUserAdmin: IMenuButton[] = [
     key: "place",
     icon: HomeOutlined,
     label: "",
-    isBadge: false,
     link: RouteNames.USER_ID,
   },
   {
@@ -147,7 +133,6 @@ let menuButtonsUserAdmin: IMenuButton[] = [
     key: "info",
     icon: InfoCircleOutlined,
     label: "Мой профиль",
-    isBadge: false,
     link: RouteNames.USER_ID,
   },
   {
@@ -163,7 +148,6 @@ let menuButtonsUserAdmin: IMenuButton[] = [
     key: "programms",
     icon: FileDoneOutlined,
     label: "Образовательные программы",
-    isBadge: false,
     link: RouteNames.PROGRAMMS,
   },
   {
@@ -171,7 +155,6 @@ let menuButtonsUserAdmin: IMenuButton[] = [
     key: "events",
     icon: CalendarOutlined,
     label: "Мероприятия",
-    isBadge: false,
     link: RouteNames.EVENTS,
   },
   {
@@ -179,7 +162,6 @@ let menuButtonsUserAdmin: IMenuButton[] = [
     key: "settings",
     icon: SettingOutlined,
     label: "Управление системой",
-    isBadge: false,
     link: RouteNames.SETTINGS,
   },
   //{ key:  "logout",  icon: <PoweroffOutlined />, label: "Выйти"},

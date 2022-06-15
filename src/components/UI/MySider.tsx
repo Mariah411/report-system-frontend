@@ -2,6 +2,7 @@ import { PoweroffOutlined } from "@ant-design/icons";
 import { Badge, Menu } from "antd";
 import Sider from "antd/lib/layout/Sider";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getButtonsMenu } from "../../data/buttonsData";
 import { useActions } from "../../hooks/useActions";
@@ -62,13 +63,13 @@ export default function MySider(props: Props) {
         {buttonsArr.map((b) =>
           b.isBadge ? (
             <Menu.Item key={b.key} icon={<b.icon />}>
-              {<Link to={b.link}>{b.label}</Link>}
+              {<NavLink to={b.link}>{b.label}</NavLink>}
 
-              <Badge count={5} offset={[150, -2]}></Badge>
+              <Badge count={5} offset={[100, -2]}></Badge>
             </Menu.Item>
           ) : (
             <Menu.Item key={b.key} icon={<b.icon />}>
-              {<Link to={b.link}>{b.label}</Link>}
+              {<NavLink to={b.link}>{b.label}</NavLink>}
             </Menu.Item>
           )
         )}
