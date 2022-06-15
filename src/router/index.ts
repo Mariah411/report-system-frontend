@@ -6,6 +6,8 @@ import SettingsPage from "../pages/SettingsPage";
 
 import TasksPage from "../pages/TasksPage";
 
+import { RouteNames } from "./routeNames";
+
 // интерфейс маршрута
 export interface IRoute {
   path: string;
@@ -13,16 +15,16 @@ export interface IRoute {
   index: boolean;
 }
 
-//перечисление маршрутов
-export enum RouteNames {
-  LOGIN = "/login",
-  FIRST = "/",
-  TASKS = "tasks",
-  USER_ID = "/user/:id",
-  PROGRAMMS = "/programms",
-  EVENTS = "/events",
-  SETTINGS = "settings",
-}
+// //перечисление маршрутов
+// export enum RouteNames {
+//   LOGIN = "/login",
+//   FIRST = "/",
+//   TASKS = "tasks",
+//   USER_ID = "/user/:id",
+//   PROGRAMMS = "/programms",
+//   EVENTS = "/events",
+//   SETTINGS = "/settings",
+// }
 
 /*//публичные маршруты
 export const publicRoutes: IRoute[] = [

@@ -16,8 +16,9 @@ import { IUser } from "../../models/IUser";
 import { IMenuButton } from "../../models/IMenuButton";
 import { useActions } from "../../hooks/useActions";
 import { Link, NavLink } from "react-router-dom";
-import { RouteNames } from "../../router";
-import { menuButtons } from "../../data/menuData";
+import { RouteNames } from "../../router/routeNames";
+//import { RouteNames } from "../../router";
+//import { menuButtons } from "../../data/menuData";
 import { getButtonsMenu } from "../../data/buttonsData";
 
 // боковая панель

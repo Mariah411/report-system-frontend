@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { $CombinedState } from "redux";
 import { useTypedSelector } from "../hooks/useTypedSelectror";
-import { privateRoutes, publicRoutes, RouteNames } from "../router";
+//import { privateRoutes, publicRoutes, RouteNames } from "../router";
+import { privateRoutes, publicRoutes } from "../router";
+import { RouteNames } from "../router/routeNames";
 import MyLayout from "./MyLayout";
 import MySider from "./UI/MySider";
 

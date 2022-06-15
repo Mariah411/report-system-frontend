@@ -1,4 +1,5 @@
 //import { RouteNames } from "../router";
+import { RouteNames } from "../router/routeNames";
 import { IUser } from "../models/IUser";
 import { IMenuButton } from "../models/IMenuButton";
 import {
@@ -13,15 +14,15 @@ import {
   CrownOutlined,
 } from "@ant-design/icons";
 
-enum RouteNames {
+/*enum RouteNames {
   LOGIN = "/login",
   FIRST = "/",
   TASKS = "tasks",
   USER_ID = "/user/:id",
   PROGRAMMS = "/programms",
   EVENTS = "/events",
-  SETTINGS = "settings",
-}
+  SETTINGS = "/settings",
+}*/
 
 export let menuButtonsUser: IMenuButton[] = [
   {
