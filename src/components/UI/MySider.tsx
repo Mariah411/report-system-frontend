@@ -1,25 +1,13 @@
-import React, { Dispatch, useEffect, useState } from "react";
-import {
-  UserOutlined,
-  ProfileOutlined,
-  FileDoneOutlined,
-  CalendarOutlined,
-  PoweroffOutlined,
-} from "@ant-design/icons";
-import { Layout, Slider, Menu, Badge } from "antd";
+import { PoweroffOutlined } from "@ant-design/icons";
+import { Badge, Menu } from "antd";
 import Sider from "antd/lib/layout/Sider";
-//import { getButtonsMenu } from "../../data/buttonsData";
-import { useDispatch } from "react-redux";
-import { AuthActionCreators } from "../../store/reducers/auth/action-creators";
-import { useTypedSelector } from "../../hooks/useTypedSelectror";
-import { IUser } from "../../models/IUser";
-import { IMenuButton } from "../../models/IMenuButton";
-import { useActions } from "../../hooks/useActions";
-import { Link, NavLink } from "react-router-dom";
-import { RouteNames } from "../../router/routeNames";
-//import { RouteNames } from "../../router";
-//import { menuButtons } from "../../data/menuData";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { getButtonsMenu } from "../../data/buttonsData";
+import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelectror";
+import { IMenuButton } from "../../models/IMenuButton";
+import { IUser } from "../../models/IUser";
 
 // боковая панель
 
@@ -48,12 +36,12 @@ type Props = {};
        */
 
 export default function MySider(props: Props) {
-  const dispatch: Dispatch<any> = useDispatch();
-
   const user: IUser = useTypedSelector((state) => state.auth.user);
 
-  const [buttonsArr, setTest] = useState<IMenuButton[]>(getButtonsMenu(user));
-  // let buttonsArr: IMenuButton[] = [...getButtonsMenu(user)];
+  const [buttonsArr, setButtonsArr] = useState<IMenuButton[]>(
+    getButtonsMenu(user)
+  );
+
   console.log(buttonsArr);
 
   const { logout } = useActions();
@@ -89,7 +77,7 @@ export default function MySider(props: Props) {
           icon={<PoweroffOutlined />}
           onClick={() => {
             logout();
-            setTest([]);
+            setButtonsArr([]);
           }}
         >
           Выйти
