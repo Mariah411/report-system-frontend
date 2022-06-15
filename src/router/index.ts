@@ -15,32 +15,7 @@ export interface IRoute {
   index: boolean;
 }
 
-// //перечисление маршрутов
-// export enum RouteNames {
-//   LOGIN = "/login",
-//   FIRST = "/",
-//   TASKS = "tasks",
-//   USER_ID = "/user/:id",
-//   PROGRAMMS = "/programms",
-//   EVENTS = "/events",
-//   SETTINGS = "/settings",
-// }
-
-/*//публичные маршруты
-export const publicRoutes: IRoute[] = [
-    {path: RouteNames.LOGIN, element: Login},
-
-]
-
-//приватные маршруты
-export const privateRoutes: IRoute[] = [
-    {path: RouteNames.FIRST, element: FirstPage, },
-    {path: RouteNames.TASKS, element: TasksPage},
-    {path: RouteNames.SETTINGS, element: SettingsPage},
-    {path: RouteNames.EVENTS, element: EventPage},
-    {path: RouteNames.PROGRAMMS, element: EventPage},
-
-]*/
+//публичные маршруты
 
 export const publicRoutes: IRoute[] = [
   { path: RouteNames.LOGIN, element: Login, index: false },

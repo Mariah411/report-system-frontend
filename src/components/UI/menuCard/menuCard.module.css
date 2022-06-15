@@ -1,0 +1,21 @@
+
+
+.menu_card{
+    margin: 15px;
+    background-color: #45505b;
+    border: none;
+    
+}
+
+.pin, .pin:hover, .pin:focus{
+    margin: 5px;
+    color: white;
+    background-color: #1d39c4;
+    border: none;
+    
+}
+
+.pin:hover, .pin:focus{
+
+    cursor: default;
+}

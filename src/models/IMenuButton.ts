@@ -1,4 +1,3 @@
-//import { RouteNames } from "../router"
 import { RouteNames } from "../router/routeNames";
 
 export interface IMenuButton {
@@ -8,5 +7,4 @@ export interface IMenuButton {
   label: string;
   isBadge?: boolean;
   link: RouteNames;
-  //clickable: boolean
 }
