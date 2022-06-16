@@ -5,7 +5,7 @@ import MySider from "../components/UI/MySider";
 
 const FirstPage: FC = () => {
   return (
-    <Layout className="site-layout layout_m-300">
+    <Layout className="site-layout layout_m">
       <Content
         style={{
           margin: "24px 16px 0",

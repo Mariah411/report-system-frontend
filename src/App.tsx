@@ -4,9 +4,16 @@ import "./App.css";
 import AppRouter from "./components/AppRouter";
 import { useActions } from "./hooks/useActions";
 import { IUser } from "./models/IUser";
+import { ConfigProvider } from "antd";
+
+import moment from "moment";
+import "moment/locale/ru";
+
+import ru_RU from "antd/lib/locale-provider/ru_RU";
 
 const App: FC = () => {
   const { setAuth, setUser } = useActions();
+  moment.locale("ru");
 
   useEffect(() => {
     // временно, изменить на проверку токена
@@ -24,8 +31,9 @@ const App: FC = () => {
 
   return (
     <div className="App">
-      
-      <AppRouter />
+      <ConfigProvider locale={ru_RU}>
+        <AppRouter />
+      </ConfigProvider>
     </div>
   );
 };

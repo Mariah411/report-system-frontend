@@ -56,7 +56,7 @@ const TasksPage: FC = () => {
 
   // <MySider />
   return (
-    <Layout className="site-layout layout_m-300">
+    <Layout className="site-layout layout_m">
       <Content className="content_m-20">
         <div className="site-layout-background" style={{ padding: 24 }}>
           <Segmented
