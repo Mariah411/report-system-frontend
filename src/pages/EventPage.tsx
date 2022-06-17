@@ -74,7 +74,7 @@ const EventPage: FC = () => {
         </Card>
 
         <Modal
-          title="Новая образовательная программа"
+          title="Новая мероприятие"
           visible={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}

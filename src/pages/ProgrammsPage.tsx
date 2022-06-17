@@ -9,16 +9,19 @@ import {
   Radio,
   Row,
   Select,
+  Tag,
   Typography,
 } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import Table, { ColumnsType } from "antd/lib/table";
 import axios from "axios";
 import React, { FC, useState } from "react";
+import { render } from "react-dom";
 import DirectionService from "../api/DirectionsServise";
 import { directions } from "../data/directionsData";
 import { columns, data } from "../data/tableData";
 import { IDirection } from "../models/IDirection";
+import { IUser } from "../models/IUser";
 
 const ProgrammsPage: FC = () => {
   /*  const directions = axios
@@ -40,6 +43,7 @@ const ProgrammsPage: FC = () => {
       render: () => <Button>Удалить</Button>,
     },
   ];
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {

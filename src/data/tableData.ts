@@ -12,7 +12,19 @@ interface DataType {
 
 export const columns: ColumnsType<DataType> = [
   { title: "Наименование", dataIndex: "name", key: "name" },
-  { title: "Учреждение", dataIndex: "school", key: "school" },
+  {
+    title: "Учреждение",
+    dataIndex: "school",
+    key: "school",
+    defaultSortOrder: "descend",
+    // sorter: (a, b) => {
+    //   let strA = a.school.toLowerCase;
+    //   let strB = b.school.toLowerCase;
+    //   if (strA < strB) return -1;
+    //   if (strA > strB) return 1;
+    //   return 0;
+    // },
+  },
   { title: "Направление обучения", dataIndex: "direction", key: "direction" },
   { title: "Возраст", dataIndex: "age", key: "age" },
   {
