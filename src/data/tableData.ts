@@ -1,16 +1,10 @@
+import { IProgram } from "./../models/IProgram";
 import { Button } from "antd";
 import { ColumnsType } from "antd/lib/table";
 
-interface DataType {
-  key: React.Key;
-  name: string;
-  school: string;
-  direction: string;
-  age: string;
-  id_nav: number;
-}
+export type IProgramDataType = IProgram & { key: React.Key };
 
-export const columns: ColumnsType<DataType> = [
+export const columns: ColumnsType<IProgramDataType> = [
   { title: "Наименование", dataIndex: "name", key: "name" },
   {
     title: "Учреждение",
@@ -34,37 +28,37 @@ export const columns: ColumnsType<DataType> = [
   },
 ];
 
-export const data: DataType[] = [
-  {
-    key: 1,
-    name: "3D моделирование",
-    school: "«Станция  юных техников» Алексеевского городского округа",
-    direction: "3D моделирование, прототипирование",
-    age: "10-14",
-    id_nav: 898,
-  },
-  {
-    key: 2,
-    name: "3D моделирование",
-    school: "«Станция  юных техников» Алексеевского городского округа",
-    direction: "3D моделирование, прототипирование",
-    age: "10-14",
-    id_nav: 898,
-  },
-  {
-    key: 3,
-    name: "3D моделирование",
-    school: "«Станция  юных техников» Алексеевского городского округа",
-    direction: "3D моделирование, прототипирование",
-    age: "10-14",
-    id_nav: 898,
-  },
-  {
-    key: 4,
-    name: "3D моделирование",
-    school: "«Станция  юных техников» Алексеевского городского округа",
-    direction: "3D моделирование, прототипирование",
-    age: "10-14",
-    id_nav: 898,
-  },
-];
+// export const data: DataType[] = [
+//   {
+//     key: 1,
+//     name: "3D моделирование",
+//     school: "«Станция  юных техников» Алексеевского городского округа",
+//     direction: "3D моделирование, прототипирование",
+//     age: "10-14",
+//     id_nav: 898,
+//   },
+//   {
+//     key: 2,
+//     name: "3D моделирование",
+//     school: "«Станция  юных техников» Алексеевского городского округа",
+//     direction: "3D моделирование, прототипирование",
+//     age: "10-14",
+//     id_nav: 898,
+//   },
+//   {
+//     key: 3,
+//     name: "3D моделирование",
+//     school: "«Станция  юных техников» Алексеевского городского округа",
+//     direction: "3D моделирование, прототипирование",
+//     age: "10-14",
+//     id_nav: 898,
+//   },
+//   {
+//     key: 4,
+//     name: "3D моделирование",
+//     school: "«Станция  юных техников» Алексеевского городского округа",
+//     direction: "3D моделирование, прототипирование",
+//     age: "10-14",
+//     id_nav: 898,
+//   },
+// ];

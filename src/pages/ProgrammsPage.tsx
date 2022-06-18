@@ -6,6 +6,7 @@ import {
   Input,
   Layout,
   Modal,
+  Popconfirm,
   Radio,
   Row,
   Select,
@@ -15,32 +16,63 @@ import {
 import { Content } from "antd/lib/layout/layout";
 import Table, { ColumnsType } from "antd/lib/table";
 import axios from "axios";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { render } from "react-dom";
 import DirectionService from "../api/DirectionsServise";
-import { directions } from "../data/directionsData";
-import { columns, data } from "../data/tableData";
+import ProgramsService from "../api/ProgramsServise";
+import { columns, IProgramDataType } from "../data/tableData";
 import { IDirection } from "../models/IDirection";
+import { IProgram } from "../models/IProgram";
 import { IUser } from "../models/IUser";
 
 const ProgrammsPage: FC = () => {
-  /*  const directions = axios
-    .get<IDirection[]>("./directions.json")
-    .then((response) => response.data)
-    .then((d) => d);
+  const [directionsArr, setDirections] = useState<IDirection[]>([]);
+  const [programmsData, setProgrammsData] = useState<IProgramDataType[]>([]);
 
-  console.log(directions);*/
-  const [directionsArr, setDirections] = useState(directions);
+  // получение списка направлений и программ
+  useEffect(() => {
+    const getDirectionsData = async () => {
+      const response = await DirectionService.getDirections();
+      setDirections(response.data);
+    };
 
-  //console.log(directionsArr);
+    const getProgrammsData = async () => {
+      const response = await ProgramsService.getProgramms();
+      const newData: IProgramDataType[] = response.data.map((val, index) => {
+        return { key: index + 1, ...val };
+      });
+      setProgrammsData(newData);
+      // setProgramms(response.data);
+    };
+
+    getDirectionsData();
+    getProgrammsData();
+  }, []);
+
+  console.log(programmsData);
+  // удаление программы
+  const handleDelete = (key: React.Key) => {
+    const newData = programmsData.filter((item) => item.key !== key);
+    setProgrammsData(newData);
+  };
 
   const myColumns = [
     ...columns,
     {
       title: "",
-      dataIndex: "",
-      key: "x",
-      render: () => <Button>Удалить</Button>,
+      dataIndex: "operator",
+      render: (_: any, record: { key: React.Key }) =>
+        programmsData.length >= 1 ? (
+          <Popconfirm
+            title="Вы уверены?"
+            onConfirm={() => {
+              console.log(record);
+              handleDelete(record.key);
+            }}
+          >
+            <Button>Удалить</Button>
+          </Popconfirm>
+        ) : null,
     },
   ];
 
@@ -98,7 +130,12 @@ const ProgrammsPage: FC = () => {
           </Row>
         </Card>
         <Card>
-          <Table columns={myColumns} size="middle" dataSource={data} />
+          <Table
+            columns={myColumns}
+            size="middle"
+            dataSource={programmsData}
+            rowKey={(record) => record.key}
+          />
         </Card>
 
         <Modal
