@@ -50,7 +50,8 @@ const ProgrammsPage: FC = () => {
   }, []);
 
   console.log(programmsData);
-  // удаление программы
+  // удаление программы (изменить)
+
   const handleDelete = (key: React.Key) => {
     const newData = programmsData.filter((item) => item.key !== key);
     setProgrammsData(newData);
@@ -82,6 +83,7 @@ const ProgrammsPage: FC = () => {
     setIsModalVisible(true);
   };
 
+  // добавление программы (изменить)
   const onCreate = (values: any) => {
     console.log("Received values of form: ", values);
     setIsModalVisible(false);
