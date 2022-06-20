@@ -9,14 +9,9 @@ const onSearch = (value: string) => {
 
 const tagRender = (props: CustomTagProps) => {
   const { label, value, closable, onClose } = props;
-  const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-  };
   return (
     <Tag
       color="purple"
-      onMouseDown={onPreventMouseDown}
       closable={closable}
       onClose={onClose}
       style={{ marginRight: 3 }}
@@ -29,10 +24,12 @@ const tagRender = (props: CustomTagProps) => {
 type Props = {
   data: IPlace[];
   form: FormInstance<any>;
+  selectedValues: number[];
+  fieldName: string;
 };
 const SelectSearchMultiply = (props: Props) => {
   const onChange = (values: number[]) => {
-    props.form.setFieldsValue({ places: values });
+    props.form.setFieldsValue({ [props.fieldName]: values });
     console.log(values);
   };
   return (
@@ -44,6 +41,7 @@ const SelectSearchMultiply = (props: Props) => {
       tagRender={tagRender}
       onChange={onChange}
       onSearch={onSearch}
+      defaultValue={props.selectedValues}
       filterOption={(input, option) =>
         (option!.children as unknown as string)
           .toLowerCase()

@@ -15,6 +15,7 @@ import {
 import { Content } from "antd/lib/layout/layout";
 import { ColumnsType } from "antd/lib/table";
 import axios from "axios";
+import { userInfo } from "os";
 import React, { FC, useEffect, useState } from "react";
 import SelectSearchMultiply from "../components/SelectSearchMultiply";
 import { IPlace } from "../models/IPlace";
@@ -28,6 +29,11 @@ const SettingsPage: FC = () => {
   useEffect(() => {
     const getData = async () => {
       const response = await axios.get<IUser[]>("./users.json");
+      //   let newData = response.data.map((user: IUser) => ({
+      //     ...user,
+      //     key: user.id,
+      //   }));
+      //  setData(newData);
       setData(response.data);
     };
 
@@ -42,7 +48,10 @@ const SettingsPage: FC = () => {
 
   //setTimeout(, 0);
 
-  console.log(data);
+  //console.log(data);
+
+  const [editingRow, setEditingRow] = useState<number>(0);
+  const [editForm] = Form.useForm();
 
   // колонки
   const cols: ColumnsType<IUser> = [
@@ -66,21 +75,43 @@ const SettingsPage: FC = () => {
       title: "Места",
       dataIndex: "places",
       key: "places",
-      render: (places: string[]) => (
-        <>
-          {places.map((place) => (
-            <Tag color="green" key={place}>
-              {place}
-            </Tag>
-          ))}
-        </>
-      ),
+      render: (places: IPlace[], record) => {
+        let recordPlaces: number[] = [];
+        record.places.map((place) => recordPlaces.push(place.id));
+
+        return record.id === editingRow ? (
+          <Form.Item name="places">
+            <SelectSearchMultiply
+              fieldName="places"
+              data={placesData}
+              form={editForm}
+              selectedValues={recordPlaces}
+            />
+          </Form.Item>
+        ) : (
+          <>
+            {places.map((place) => (
+              <Tag color="purple" key={place.id}>
+                {place.name}
+              </Tag>
+            ))}
+          </>
+        );
+      },
     },
 
     {
       title: "",
       dataIndex: "",
-      render: () => <Button>Редактировать</Button>,
+      render: (_: any, record) => (
+        <Button
+          onClick={() => {
+            setEditingRow(record.id);
+          }}
+        >
+          Редактировать
+        </Button>
+      ),
     },
   ];
 
@@ -144,7 +175,12 @@ const SettingsPage: FC = () => {
           </Row>
         </Card>
         <Card>
-          <Table columns={myColumns} size="middle" dataSource={data} />
+          <Table
+            columns={myColumns}
+            size="middle"
+            dataSource={data}
+            rowKey={(record) => record.id}
+          />
         </Card>
 
         <Modal
@@ -177,7 +213,12 @@ const SettingsPage: FC = () => {
               label="Зависимые районы / учреждения"
               //rules={[...myRules, { type: "array" }]}
             >
-              <SelectSearchMultiply data={placesData} form={form} />
+              <SelectSearchMultiply
+                fieldName="places"
+                data={placesData}
+                form={form}
+                selectedValues={[]}
+              />
             </Form.Item>
           </Form>
         </Modal>

@@ -22,7 +22,7 @@ const MenuCard: FC<Props> = (props: Props) => {
             {props.user.places.map((place) => (
               <Col>
                 <Button className={cl.pin} size="small" shape="round">
-                  {place}
+                  {place.name}
                 </Button>
               </Col>
             ))}
