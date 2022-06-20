@@ -18,6 +18,7 @@ import { ColumnsType } from "antd/lib/table";
 import axios from "axios";
 import { userInfo } from "os";
 import React, { FC, useEffect, useState } from "react";
+import ModalWithForm from "../components/ModalWithForm";
 import SelectSearchMultiply from "../components/SelectSearchMultiply";
 import { IPlace } from "../models/IPlace";
 import { IProgram } from "../models/IProgram";
@@ -84,41 +85,26 @@ const SettingsPage: FC = () => {
       title: "ФИО",
       dataIndex: "fio",
       key: "fio",
-      render: (text, record) => {
-        return record.id === editingRow ? renderInput("fio", text) : text;
-      },
+      width: "25%",
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      render: (text, record) => {
-        return record.id === editingRow ? renderInput("email", text) : text;
-      },
+      width: "25%",
     },
     {
       title: "Роли",
       dataIndex: "roles",
       key: "roles",
+      width: "15%",
       render: (roles: string[]) => <>{renderStringTags(roles)}</>,
-      //       render: (roles: string[], record) => {
-      //         return record.id === editingRow ? (
-      //           <Form.Item name="places">
-      //             <SelectSearchMultiply
-      //               fieldName="places"
-      //               data={[{id: 1, name: user}]}
-      //               form={editForm}
-      //               selectedValues={[]}
-      //             />
-      //           </Form.Item>
-      //         ) :
-      // <>{renderStringTags(roles)}</>,
-      //       }
     },
     {
       title: "Места",
       dataIndex: "places",
       key: "places",
+      width: "25%",
       render: (places: IPlace[], record) => {
         let recordPlaces: number[] = [];
         record.places.map((place) => recordPlaces.push(place.id));
@@ -141,6 +127,7 @@ const SettingsPage: FC = () => {
     {
       title: "",
       dataIndex: "",
+      width: "10%",
       render: (_: any, record) => (
         <Button
           onClick={() => {
@@ -172,23 +159,7 @@ const SettingsPage: FC = () => {
 
   // добавление программы (изменить)
   const onCreate = (values: any) => {
-    console.log("Received values of form: ", values);
-    setIsModalVisible(false);
-  };
-
-  const handleOk = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        form.resetFields();
-        onCreate(values);
-      })
-      .catch((info) => {
-        console.log("Validate Failed:", info);
-      });
-  };
-
-  const handleCancel = () => {
+    console.log("Созданный пользователь: ", values);
     setIsModalVisible(false);
   };
 
@@ -232,20 +203,14 @@ const SettingsPage: FC = () => {
           </Form>
         </Card>
 
-        <Modal
+        <ModalWithForm
           title="Новый пользователь системы"
-          visible={isModalVisible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          okText="Добавить"
-          cancelText="Отмена"
+          isVisible={isModalVisible}
+          form={form}
+          setVisible={setIsModalVisible}
+          onCreate={onCreate}
         >
-          <Form
-            form={form}
-            layout="vertical"
-            name="form_in_modal"
-            initialValues={{ modifier: "public" }}
-          >
+          <Form form={form} layout="vertical" name="form_in_modal">
             <Form.Item name="fio" label="ФИО" rules={myRules}>
               <Input />
             </Form.Item>
@@ -270,7 +235,7 @@ const SettingsPage: FC = () => {
               />
             </Form.Item>
           </Form>
-        </Modal>
+        </ModalWithForm>
       </Content>
     </Layout>
   );

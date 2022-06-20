@@ -20,6 +20,7 @@ import React, { FC, useEffect, useState } from "react";
 import { render } from "react-dom";
 import DirectionService from "../api/DirectionsServise";
 import ProgramsService from "../api/ProgramsServise";
+import ModalWithForm from "../components/ModalWithForm";
 import { columns, IProgramDataType } from "../data/tableData";
 import { IDirection } from "../models/IDirection";
 import { IProgram } from "../models/IProgram";
@@ -50,6 +51,7 @@ const ProgrammsPage: FC = () => {
   }, []);
 
   console.log(programmsData);
+
   // удаление программы (изменить)
 
   const handleDelete = (key: React.Key) => {
@@ -85,23 +87,7 @@ const ProgrammsPage: FC = () => {
 
   // добавление программы (изменить)
   const onCreate = (values: any) => {
-    console.log("Received values of form: ", values);
-    setIsModalVisible(false);
-  };
-
-  const handleOk = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        form.resetFields();
-        onCreate(values);
-      })
-      .catch((info) => {
-        console.log("Validate Failed:", info);
-      });
-  };
-
-  const handleCancel = () => {
+    console.log("Программа для добавления: ", values);
     setIsModalVisible(false);
   };
 
@@ -140,20 +126,14 @@ const ProgrammsPage: FC = () => {
           />
         </Card>
 
-        <Modal
+        <ModalWithForm
           title="Новая образовательная программа"
-          visible={isModalVisible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          okText="Добавить"
-          cancelText="Отмена"
+          isVisible={isModalVisible}
+          form={form}
+          setVisible={setIsModalVisible}
+          onCreate={onCreate}
         >
-          <Form
-            form={form}
-            layout="vertical"
-            name="form_in_modal"
-            initialValues={{ modifier: "public" }}
-          >
+          <Form form={form} layout="vertical" name="form_in_modal">
             <Form.Item name="name" label="Название" rules={myRules}>
               <Input />
             </Form.Item>
@@ -176,16 +156,16 @@ const ProgrammsPage: FC = () => {
             </Form.Item>
 
             <Form.Item
-              name="modifier"
+              name="programm_type"
               className="collection-create-form_last-form-item"
             >
               <Radio.Group>
-                <Radio value="public">ДО(О)П</Radio>
-                <Radio value="private">АДО(О)П</Radio>
+                <Radio value="1">ДО(О)П</Radio>
+                <Radio value="2">АДО(О)П</Radio>
               </Radio.Group>
             </Form.Item>
           </Form>
-        </Modal>
+        </ModalWithForm>
       </Content>
     </Layout>
   );

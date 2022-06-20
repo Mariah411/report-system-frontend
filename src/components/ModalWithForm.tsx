@@ -6,45 +6,41 @@ type Props = {
   children: ReactElement;
   title: string;
   form: FormInstance;
-  isModalVisible: boolean;
-  //setIsModalVisible: (arg:boolean):void
+  isVisible: boolean;
+  setVisible: (args: boolean) => void;
+  onCreate: (args: any) => void;
 };
-/*const ModalWithForm = (props: Props) => {
+const ModalWithForm = (props: Props) => {
+  const { setVisible, title, form, isVisible, onCreate } = props;
 
-    const onCreate = (values: any) => {
-        console.log("Received values of form: ", values);
-        setIsModalVisible(false);
-      };
-    
-      const handleOk = () => {
-        form
-          .validateFields()
-          .then((values: any) => {
-            form.resetFields();
-            onCreate(values);
-          })
-          .catch((info: any) => {
-            console.log("Validate Failed:", info);
-          });
-      };
-    
-      const handleCancel = () => {
-        setIsModalVisible(false);
-      };
+  const handleOk = () => {
+    form
+      .validateFields()
+      .then((values: any) => {
+        form.resetFields();
+        onCreate(values);
+      })
+      .catch((info: any) => {
+        console.log("Validate Failed:", info);
+      });
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
   return (
     <Modal
       title={title}
-      visible={isModalVisible}
+      visible={isVisible}
       onOk={handleOk}
       onCancel={handleCancel}
       okText="Добавить"
       cancelText="Отмена"
     >
-      {children}
+      {props.children}
     </Modal>
   );
 };
 
 export default ModalWithForm;
-*/
