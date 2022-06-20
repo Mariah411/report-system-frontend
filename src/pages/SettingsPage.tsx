@@ -7,6 +7,7 @@ import {
   Input,
   Layout,
   Modal,
+  PageHeader,
   Row,
   Table,
   Tag,
@@ -15,6 +16,7 @@ import {
 import FormItem from "antd/lib/form/FormItem";
 import { Content } from "antd/lib/layout/layout";
 import { ColumnsType } from "antd/lib/table";
+import Search from "antd/lib/transfer/search";
 import axios from "axios";
 import { userInfo } from "os";
 import React, { FC, useEffect, useState } from "react";
@@ -64,23 +66,15 @@ const SettingsPage: FC = () => {
   const renderStringTags = (array: string[]) => {
     {
       return array.map((item) => (
-        <Tag color="purple" key={item}>
+        <Tag color="geekblue" key={item}>
           {item}
         </Tag>
       ));
     }
   };
 
-  const renderInput = (dataIndex: string, value: string) => {
-    const inputType = dataIndex === "email" ? "email" : "text";
-    return (
-      <FormItem name={dataIndex}>
-        <Input type={inputType} defaultValue={value} />
-      </FormItem>
-    );
-  };
   // колонки
-  const cols: ColumnsType<IUser> = [
+  const cols1: ColumnsType<IUser> = [
     {
       title: "ФИО",
       dataIndex: "fio",
@@ -140,30 +134,43 @@ const SettingsPage: FC = () => {
     },
   ];
 
-  interface EditingCellProps {
-    record: IUser;
-    data: any;
-    type: "select" | "input";
-    editingRow: number;
-    initialValue: any | any[];
-  }
-  const getEditingCell = () => {};
+  const cols2: ColumnsType<IPlace> = [
+    {
+      title: "id",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Название района/учреждения",
+      dataIndex: "name",
+      key: "name",
+    },
+  ];
 
-  const myColumns = [...cols];
+  const [isModalVisible1, setIsModalVisible1] = useState(false);
+  const [isModalVisible2, setIsModalVisible2] = useState(false);
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const showModal = () => {
-    setIsModalVisible(true);
+  const showModal1 = () => {
+    setIsModalVisible1(true);
+  };
+  const showModal2 = () => {
+    setIsModalVisible2(true);
   };
 
-  // добавление программы (изменить)
-  const onCreate = (values: any) => {
+  // добавление пользователя
+  const onCreateUser = (values: any) => {
     console.log("Созданный пользователь: ", values);
-    setIsModalVisible(false);
+    setIsModalVisible1(false);
   };
 
-  const [form] = Form.useForm();
+  // добавление учреждения
+  const onCreatePlace = (values: any) => {
+    console.log("Учреждение: ", values);
+    setIsModalVisible2(false);
+  };
+
+  const [formUser] = Form.useForm();
+  const [formPlace] = Form.useForm();
 
   const myRules = [
     {
@@ -177,25 +184,25 @@ const SettingsPage: FC = () => {
     { label: "Администратор", value: "admin" },
   ];
 
+  const onSearch = (value: string) => console.log(value);
+
   return (
     <Layout className="site-layout layout_m">
       <Content className="content content_m-20">
-        <Card>
-          <Row align="middle" justify="space-between">
-            <Col>
-              <Typography.Title level={3}>Управление системой</Typography.Title>
-            </Col>
-            <Col>
-              <Button type="primary" onClick={showModal}>
-                Зарегестрировать нового пользователя
-              </Button>
-            </Col>
-          </Row>
-        </Card>
+        <PageHeader
+          ghost={false}
+          title="Управление системой"
+          subTitle="Пользователи системы"
+          extra={[
+            <Button type="primary" onClick={showModal1}>
+              Добавить нового пользователя
+            </Button>,
+          ]}
+        />
         <Card>
           <Form form={editForm} component={false}>
             <Table
-              columns={myColumns}
+              columns={cols1}
               size="middle"
               dataSource={data}
               rowKey={(record) => record.id}
@@ -203,14 +210,34 @@ const SettingsPage: FC = () => {
           </Form>
         </Card>
 
+        <PageHeader
+          ghost={false}
+          title="Список учреждений"
+          subTitle="Учреждения ДО Белгородской области"
+          extra={[
+            <Button type="primary" onClick={showModal2}>
+              Добавить учреждение
+            </Button>,
+          ]}
+        />
+
+        <Card>
+          <Table
+            columns={cols2}
+            size="middle"
+            dataSource={placesData}
+            rowKey={(record) => record.id}
+          />
+        </Card>
+
         <ModalWithForm
           title="Новый пользователь системы"
-          isVisible={isModalVisible}
-          form={form}
-          setVisible={setIsModalVisible}
-          onCreate={onCreate}
+          isVisible={isModalVisible1}
+          form={formUser}
+          setVisible={setIsModalVisible1}
+          onCreate={onCreateUser}
         >
-          <Form form={form} layout="vertical" name="form_in_modal">
+          <Form form={formUser} layout="vertical" name="form_in_modal">
             <Form.Item name="fio" label="ФИО" rules={myRules}>
               <Input />
             </Form.Item>
@@ -230,11 +257,32 @@ const SettingsPage: FC = () => {
               <SelectSearchMultiply
                 fieldName="places"
                 data={placesData}
-                form={form}
+                form={formUser}
                 selectedValues={[]}
               />
             </Form.Item>
           </Form>
+        </ModalWithForm>
+
+        <ModalWithForm
+          title="Новое учреждение"
+          isVisible={isModalVisible2}
+          form={formPlace}
+          setVisible={setIsModalVisible2}
+          onCreate={onCreatePlace}
+        >
+          <>
+            {/* <Search placeholder="input search text" onSearch={onSearch} style={{ width: 200 }} /> */}
+            <Form form={formPlace} layout="vertical" name="form_in_modal">
+              <Form.Item
+                name="name"
+                label="Название учреждения"
+                rules={myRules}
+              >
+                <Input />
+              </Form.Item>
+            </Form>
+          </>
         </ModalWithForm>
       </Content>
     </Layout>
