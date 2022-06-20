@@ -11,7 +11,7 @@ const tagRender = (props: CustomTagProps) => {
   const { label, value, closable, onClose } = props;
   return (
     <Tag
-      color="purple"
+      color="geekblue"
       closable={closable}
       onClose={onClose}
       style={{ marginRight: 3 }}
@@ -22,7 +22,7 @@ const tagRender = (props: CustomTagProps) => {
 };
 
 type Props = {
-  data: IPlace[];
+  data: IPlace[] | [{ id: number | string; name: string }];
   form: FormInstance<any>;
   selectedValues: number[];
   fieldName: string;

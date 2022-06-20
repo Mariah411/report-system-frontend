@@ -12,6 +12,7 @@ import {
   Tag,
   Typography,
 } from "antd";
+import FormItem from "antd/lib/form/FormItem";
 import { Content } from "antd/lib/layout/layout";
 import { ColumnsType } from "antd/lib/table";
 import axios from "axios";
@@ -19,6 +20,7 @@ import { userInfo } from "os";
 import React, { FC, useEffect, useState } from "react";
 import SelectSearchMultiply from "../components/SelectSearchMultiply";
 import { IPlace } from "../models/IPlace";
+import { IProgram } from "../models/IProgram";
 //import { cols } from "../data/tableUsersData";
 import { IUser } from "../models/IUser";
 
@@ -29,11 +31,6 @@ const SettingsPage: FC = () => {
   useEffect(() => {
     const getData = async () => {
       const response = await axios.get<IUser[]>("./users.json");
-      //   let newData = response.data.map((user: IUser) => ({
-      //     ...user,
-      //     key: user.id,
-      //   }));
-      //  setData(newData);
       setData(response.data);
     };
 
@@ -53,23 +50,70 @@ const SettingsPage: FC = () => {
   const [editingRow, setEditingRow] = useState<number>(0);
   const [editForm] = Form.useForm();
 
+  const renderArrayTags = (array: IPlace[]) => {
+    {
+      return array.map((item) => (
+        <Tag color="purple" key={item.id}>
+          {item.name}
+        </Tag>
+      ));
+    }
+  };
+
+  const renderStringTags = (array: string[]) => {
+    {
+      return array.map((item) => (
+        <Tag color="purple" key={item}>
+          {item}
+        </Tag>
+      ));
+    }
+  };
+
+  const renderInput = (dataIndex: string, value: string) => {
+    const inputType = dataIndex === "email" ? "email" : "text";
+    return (
+      <FormItem name={dataIndex}>
+        <Input type={inputType} defaultValue={value} />
+      </FormItem>
+    );
+  };
   // колонки
   const cols: ColumnsType<IUser> = [
-    { title: "ФИО", dataIndex: "fio", key: "fio" },
-    { title: "Email", dataIndex: "email", key: "email" },
+    {
+      title: "ФИО",
+      dataIndex: "fio",
+      key: "fio",
+      render: (text, record) => {
+        return record.id === editingRow ? renderInput("fio", text) : text;
+      },
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: (text, record) => {
+        return record.id === editingRow ? renderInput("email", text) : text;
+      },
+    },
     {
       title: "Роли",
       dataIndex: "roles",
       key: "roles",
-      render: (roles: string[]) => (
-        <>
-          {roles.map((role) => (
-            <Tag color="blue" key={role}>
-              {role}
-            </Tag>
-          ))}
-        </>
-      ),
+      render: (roles: string[]) => <>{renderStringTags(roles)}</>,
+      //       render: (roles: string[], record) => {
+      //         return record.id === editingRow ? (
+      //           <Form.Item name="places">
+      //             <SelectSearchMultiply
+      //               fieldName="places"
+      //               data={[{id: 1, name: user}]}
+      //               form={editForm}
+      //               selectedValues={[]}
+      //             />
+      //           </Form.Item>
+      //         ) :
+      // <>{renderStringTags(roles)}</>,
+      //       }
     },
     {
       title: "Места",
@@ -89,13 +133,7 @@ const SettingsPage: FC = () => {
             />
           </Form.Item>
         ) : (
-          <>
-            {places.map((place) => (
-              <Tag color="purple" key={place.id}>
-                {place.name}
-              </Tag>
-            ))}
-          </>
+          <>{renderArrayTags(places)}</>
         );
       },
     },
@@ -114,6 +152,15 @@ const SettingsPage: FC = () => {
       ),
     },
   ];
+
+  interface EditingCellProps {
+    record: IUser;
+    data: any;
+    type: "select" | "input";
+    editingRow: number;
+    initialValue: any | any[];
+  }
+  const getEditingCell = () => {};
 
   const myColumns = [...cols];
 
@@ -175,12 +222,14 @@ const SettingsPage: FC = () => {
           </Row>
         </Card>
         <Card>
-          <Table
-            columns={myColumns}
-            size="middle"
-            dataSource={data}
-            rowKey={(record) => record.id}
-          />
+          <Form form={editForm} component={false}>
+            <Table
+              columns={myColumns}
+              size="middle"
+              dataSource={data}
+              rowKey={(record) => record.id}
+            />
+          </Form>
         </Card>
 
         <Modal
