@@ -1,3 +1,4 @@
+import { IPlace } from "./IPlace";
 // модель пользователя
 export interface IUser {
   id: number;
@@ -5,5 +6,6 @@ export interface IUser {
   password: string;
   fio: string;
   roles: string[];
-  places: string[];
+  //places: string[];
+  places: IPlace[];
 }

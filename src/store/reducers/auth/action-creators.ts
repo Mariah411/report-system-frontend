@@ -8,8 +8,9 @@ import {
   SetAuthAction,
 } from "./types";
 import axios from "axios";
+import { join } from "path";
 
-//action-creator (создание действий) 
+//action-creator (создание действий)
 //с указанием какие данные принимаает, что возвращает
 
 export const AuthActionCreators = {
@@ -34,31 +35,35 @@ export const AuthActionCreators = {
 
   login: (email: string, password: string) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(AuthActionCreators.setIsLoading(true));
+      dispatch(AuthActionCreators.setIsLoading(true));
 
-        // получение моковых данных (заменить)
-        setTimeout(async () => {
-            // заменить
-            const response = await axios.get<IUser[]>("./users.json");
-            const mokUser = response.data.find(
-              (user) => user.email === email && user.password === password
-            );
+      // получение моковых данных (заменить)
+      setTimeout(async () => {
+        // заменить
+        const response = await axios.get<IUser[]>("./users.json");
+        const mokUser = response.data.find(
+          (user) => user.email === email && user.password === password
+        );
 
-            if (mokUser) {
-              localStorage.setItem("auth", "true");
-              localStorage.setItem("email", email);
-              localStorage.setItem("roles", mokUser.roles.join(' '))
-              localStorage.setItem("fio", mokUser.fio)
-              localStorage.setItem("places", mokUser.places.join(', '))
-              dispatch(AuthActionCreators.setAuth(true));
-              dispatch(AuthActionCreators.setUser(mokUser));
-            } else {
-              dispatch(AuthActionCreators.setError("Неверный логин или пароль"));
-            }
-            dispatch(AuthActionCreators.setIsLoading(false));
-        }, 1000)
+        if (mokUser) {
+          localStorage.setItem("auth", "true");
+          localStorage.setItem("email", email);
+          localStorage.setItem("roles", mokUser.roles.join(" "));
+          localStorage.setItem("fio", mokUser.fio);
+          console.log(mokUser.places);
+          localStorage.setItem("places", JSON.stringify(mokUser.places));
 
-    
+          //localStorage.setItem("roles", mokUser.places.join(", "));
+          // let userPlaces: string[] = [];
+          // mokUser.places.map((place) => userPlaces.push(place.name));
+          // localStorage.setItem("places", userPlaces.join(", "));
+          dispatch(AuthActionCreators.setAuth(true));
+          dispatch(AuthActionCreators.setUser(mokUser));
+        } else {
+          dispatch(AuthActionCreators.setError("Неверный логин или пароль"));
+        }
+        dispatch(AuthActionCreators.setIsLoading(false));
+      }, 1000);
     } catch (e) {
       dispatch(AuthActionCreators.setError("Произошла ошибка"));
       dispatch(AuthActionCreators.setIsLoading(false));
@@ -66,19 +71,17 @@ export const AuthActionCreators = {
   },
 
   // выход из системы
-  logout: () => async (dispatch: AppDispatch) =>{
-    try{
-        localStorage.removeItem("auth")
-        localStorage.removeItem("email")
-        localStorage.removeItem("roles")
-        localStorage.removeItem("fio")
-        localStorage.removeItem("places")
-        dispatch(AuthActionCreators.setUser({} as IUser))
-        dispatch(AuthActionCreators.setAuth(false))
+  logout: () => async (dispatch: AppDispatch) => {
+    try {
+      localStorage.removeItem("auth");
+      localStorage.removeItem("email");
+      localStorage.removeItem("roles");
+      localStorage.removeItem("fio");
+      localStorage.removeItem("places");
+      dispatch(AuthActionCreators.setUser({} as IUser));
+      dispatch(AuthActionCreators.setAuth(false));
+    } catch (e) {
+      dispatch(AuthActionCreators.setError("Произошла ошибка при выходе"));
     }
-    catch(e) {
-        dispatch(AuthActionCreators.setError("Произошла ошибка при выходе"))
-    }
-
-  }
+  },
 };

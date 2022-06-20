@@ -22,7 +22,8 @@ const App: FC = () => {
       setUser({
         email: localStorage.getItem("email") || "",
         roles: localStorage.getItem("roles")?.split(" ") || [],
-        places: localStorage.getItem("places")?.split(", ") || [],
+        places: JSON.parse(localStorage.getItem("places") || "[]"),
+        //   places: localStorage.getItem("places")?.split(", ") || [],
         fio: localStorage.getItem("fio") || "",
       } as IUser);
       setAuth(true);
