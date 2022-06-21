@@ -33,28 +33,6 @@ const TasksPage: FC = () => {
 
   const user: IUser = useTypedSelector((state) => state.auth.user);
 
-  //let buttonsArr:IMenuButton[] = getButtonsMenu(user)
-
-  /* useEffect(() => {
-    buttonsArr = getButtonsMenu(user)
-    console.log('отработал useeffect')
-    console.log(buttonsArr)
-  }, [user])
-
-// buttonsArr = getButtonsMenu(user)
-
- /* console.log("Меню загрузилось")
-  console.log(`Пользователь ${user.fio}`)
-  console.log(buttonsArr)
-
-  useEffect(() => {
-    buttonsArr = getButtonsMenu(user)
-    console.log('отработал useeffect')
-    console.log(buttonsArr)
-  }, [user])
-  */
-
-  // <MySider />
   return (
     <Layout className="site-layout layout_m">
       <Content className="content_m-20">

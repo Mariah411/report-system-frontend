@@ -17,7 +17,6 @@ const AppRouter = () => {
 
   return isAuth ? (
     <>
-      {" "}
       <MySider></MySider>
       <Routes>
         <Route>

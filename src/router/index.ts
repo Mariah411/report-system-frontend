@@ -2,6 +2,7 @@ import EventPage from "../pages/EventPage";
 import FirstPage from "../pages/FirstPage";
 import Login from "../pages/Login";
 import ProgrammsPage from "../pages/ProgrammsPage";
+import ReportPage from "../pages/ReportPage";
 import SettingsPage from "../pages/SettingsPage";
 
 import TasksPage from "../pages/TasksPage";
@@ -28,4 +29,5 @@ export const privateRoutes: IRoute[] = [
   { path: RouteNames.SETTINGS, element: SettingsPage, index: false },
   { path: RouteNames.EVENTS, element: EventPage, index: false },
   { path: RouteNames.PROGRAMMS, element: ProgrammsPage, index: false },
+  { path: RouteNames.TASKS_ID, element: ReportPage, index: false },
 ];

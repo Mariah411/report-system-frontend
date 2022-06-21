@@ -7,4 +7,5 @@ export enum RouteNames {
   PROGRAMMS = "/programms",
   EVENTS = "/events",
   SETTINGS = "/settings",
+  TASKS_ID = "tasks/:id",
 }

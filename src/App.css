@@ -11,3 +11,12 @@ body{
 .content_m-20{
     margin: 20px
 }
+.forms-container{
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+
+.form-col {
+    width: 50%;
+}
