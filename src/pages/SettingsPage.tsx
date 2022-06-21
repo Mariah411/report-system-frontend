@@ -1,29 +1,13 @@
-import {
-  Button,
-  Card,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  Layout,
-  Modal,
-  PageHeader,
-  Row,
-  Table,
-  Tag,
-  Typography,
-} from "antd";
-import FormItem from "antd/lib/form/FormItem";
+import { Button, Card, Form, Layout, PageHeader, Table, Tag } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import { ColumnsType } from "antd/lib/table";
-import Search from "antd/lib/transfer/search";
 import axios from "axios";
-import { userInfo } from "os";
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import PlaceForm from "../components/forms/PlaceForm";
+import UserForm from "../components/forms/UserForm";
 import ModalWithForm from "../components/ModalWithForm";
 import SelectSearchMultiply from "../components/SelectSearchMultiply";
 import { IPlace } from "../models/IPlace";
-import { IProgram } from "../models/IProgram";
 //import { cols } from "../data/tableUsersData";
 import { IUser } from "../models/IUser";
 
@@ -45,10 +29,6 @@ const SettingsPage: FC = () => {
 
     getData();
   }, []);
-
-  //setTimeout(, 0);
-
-  //console.log(data);
 
   const [editingRow, setEditingRow] = useState<number>(0);
   const [editForm] = Form.useForm();
@@ -147,42 +127,30 @@ const SettingsPage: FC = () => {
     },
   ];
 
-  const [isModalVisible1, setIsModalVisible1] = useState(false);
-  const [isModalVisible2, setIsModalVisible2] = useState(false);
+  const [UserModVisible, setUserModVisible] = useState(false);
+  const [PlaceModVisible, setPlaceModVisible] = useState(false);
 
-  const showModal1 = () => {
-    setIsModalVisible1(true);
+  const showModalUser = () => {
+    setUserModVisible(true);
   };
-  const showModal2 = () => {
-    setIsModalVisible2(true);
+  const showModalPlace = () => {
+    setPlaceModVisible(true);
   };
 
   // добавление пользователя
   const onCreateUser = (values: any) => {
     console.log("Созданный пользователь: ", values);
-    setIsModalVisible1(false);
+    setUserModVisible(false);
   };
 
   // добавление учреждения
   const onCreatePlace = (values: any) => {
     console.log("Учреждение: ", values);
-    setIsModalVisible2(false);
+    setPlaceModVisible(false);
   };
 
   const [formUser] = Form.useForm();
   const [formPlace] = Form.useForm();
-
-  const myRules = [
-    {
-      required: true,
-      message: "Поле обязательно для заполнения",
-    },
-  ];
-
-  const options = [
-    { label: "Пользователь", value: "user" },
-    { label: "Администратор", value: "admin" },
-  ];
 
   const onSearch = (value: string) => console.log(value);
 
@@ -194,7 +162,7 @@ const SettingsPage: FC = () => {
           title="Управление системой"
           subTitle="Пользователи системы"
           extra={[
-            <Button type="primary" onClick={showModal1}>
+            <Button type="primary" onClick={showModalUser}>
               Добавить нового пользователя
             </Button>,
           ]}
@@ -215,7 +183,7 @@ const SettingsPage: FC = () => {
           title="Список учреждений"
           subTitle="Учреждения ДО Белгородской области"
           extra={[
-            <Button type="primary" onClick={showModal2}>
+            <Button type="primary" onClick={showModalPlace}>
               Добавить учреждение
             </Button>,
           ]}
@@ -232,56 +200,24 @@ const SettingsPage: FC = () => {
 
         <ModalWithForm
           title="Новый пользователь системы"
-          isVisible={isModalVisible1}
+          isVisible={UserModVisible}
           form={formUser}
-          setVisible={setIsModalVisible1}
+          setVisible={setUserModVisible}
           onCreate={onCreateUser}
         >
-          <Form form={formUser} layout="vertical" name="form_in_modal">
-            <Form.Item name="fio" label="ФИО" rules={myRules}>
-              <Input />
-            </Form.Item>
-            <Form.Item name="email" label="email" rules={myRules}>
-              <Input />
-            </Form.Item>
-
-            <Form.Item name="roles" label="Роли пользователя" rules={myRules}>
-              <Checkbox.Group options={options} defaultValue={["user"]} />
-            </Form.Item>
-
-            <Form.Item
-              name="places"
-              label="Зависимые районы / учреждения"
-              //rules={[...myRules, { type: "array" }]}
-            >
-              <SelectSearchMultiply
-                fieldName="places"
-                data={placesData}
-                form={formUser}
-                selectedValues={[]}
-              />
-            </Form.Item>
-          </Form>
+          <UserForm form={formUser} places={placesData} />
         </ModalWithForm>
 
         <ModalWithForm
           title="Новое учреждение"
-          isVisible={isModalVisible2}
+          isVisible={PlaceModVisible}
           form={formPlace}
-          setVisible={setIsModalVisible2}
+          setVisible={setPlaceModVisible}
           onCreate={onCreatePlace}
         >
           <>
             {/* <Search placeholder="input search text" onSearch={onSearch} style={{ width: 200 }} /> */}
-            <Form form={formPlace} layout="vertical" name="form_in_modal">
-              <Form.Item
-                name="name"
-                label="Название учреждения"
-                rules={myRules}
-              >
-                <Input />
-              </Form.Item>
-            </Form>
+            <PlaceForm form={formPlace} />
           </>
         </ModalWithForm>
       </Content>

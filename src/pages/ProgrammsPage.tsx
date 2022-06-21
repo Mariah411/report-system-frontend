@@ -3,28 +3,20 @@ import {
   Card,
   Col,
   Form,
-  Input,
   Layout,
-  Modal,
   Popconfirm,
-  Radio,
   Row,
-  Select,
-  Tag,
   Typography,
 } from "antd";
 import { Content } from "antd/lib/layout/layout";
-import Table, { ColumnsType } from "antd/lib/table";
-import axios from "axios";
+import Table from "antd/lib/table";
 import React, { FC, useEffect, useState } from "react";
-import { render } from "react-dom";
 import DirectionService from "../api/DirectionsServise";
 import ProgramsService from "../api/ProgramsServise";
+import ProgramForm from "../components/forms/ProgramForm";
 import ModalWithForm from "../components/ModalWithForm";
 import { columns, IProgramDataType } from "../data/tableData";
 import { IDirection } from "../models/IDirection";
-import { IProgram } from "../models/IProgram";
-import { IUser } from "../models/IUser";
 
 const ProgrammsPage: FC = () => {
   const [directionsArr, setDirections] = useState<IDirection[]>([]);
@@ -93,13 +85,6 @@ const ProgrammsPage: FC = () => {
 
   const [form] = Form.useForm();
 
-  const myRules = [
-    {
-      required: true,
-      message: "Поле обязательно для заполнения",
-    },
-  ];
-
   return (
     <Layout className="site-layout layout_m">
       <Content className="content content_m-20">
@@ -133,38 +118,7 @@ const ProgrammsPage: FC = () => {
           setVisible={setIsModalVisible}
           onCreate={onCreate}
         >
-          <Form form={form} layout="vertical" name="form_in_modal">
-            <Form.Item name="name" label="Название" rules={myRules}>
-              <Input />
-            </Form.Item>
-            <Form.Item name="school" label="Учреждение" rules={myRules}>
-              <Input />
-            </Form.Item>
-
-            <Form.Item name="direction" label="Направление" rules={myRules}>
-              <Select>
-                {directionsArr.map((direction) => (
-                  <Select.Option value={direction.id}>
-                    {direction.name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-
-            <Form.Item name="age" label="Возраст" rules={myRules}>
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              name="programm_type"
-              className="collection-create-form_last-form-item"
-            >
-              <Radio.Group>
-                <Radio value="1">ДО(О)П</Radio>
-                <Radio value="2">АДО(О)П</Radio>
-              </Radio.Group>
-            </Form.Item>
-          </Form>
+          <ProgramForm form={form} directions={directionsArr} />
         </ModalWithForm>
       </Content>
     </Layout>
