@@ -1,4 +1,14 @@
-import { Button, Card, Col, Form, Layout, Row, Table, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Layout,
+  PageHeader,
+  Row,
+  Table,
+  Typography,
+} from "antd";
 import { Content } from "antd/lib/layout/layout";
 import { FC, useState } from "react";
 import EventForm from "../components/forms/EventForm";
@@ -22,18 +32,15 @@ const EventPage: FC = () => {
   return (
     <Layout className="site-layout layout_m">
       <Content className="content content_m-20">
-        <Card>
-          <Row align="middle" justify="space-between">
-            <Col>
-              <Typography.Title level={3}>Мероприятия</Typography.Title>
-            </Col>
-            <Col>
-              <Button type="primary" onClick={showModal}>
-                Добавить мероприятие
-              </Button>
-            </Col>
-          </Row>
-        </Card>
+        <PageHeader
+          ghost={false}
+          title="Мероприятия"
+          extra={[
+            <Button type="primary" onClick={showModal}>
+              Добавить мероприятие
+            </Button>,
+          ]}
+        />
         <Card>
           <Table columns={columns} size="middle" dataSource={data} />
         </Card>

@@ -4,6 +4,7 @@ import {
   Col,
   Form,
   Layout,
+  PageHeader,
   Popconfirm,
   Row,
   Typography,
@@ -88,20 +89,15 @@ const ProgrammsPage: FC = () => {
   return (
     <Layout className="site-layout layout_m">
       <Content className="content content_m-20">
-        <Card>
-          <Row align="middle" justify="space-between">
-            <Col>
-              <Typography.Title level={3}>
-                Список образовательных программ
-              </Typography.Title>
-            </Col>
-            <Col>
-              <Button type="primary" onClick={showModal}>
-                Добавить программу
-              </Button>
-            </Col>
-          </Row>
-        </Card>
+        <PageHeader
+          ghost={false}
+          title="Образовательные программы"
+          extra={[
+            <Button type="primary" onClick={showModal}>
+              Добавить программу
+            </Button>,
+          ]}
+        />
         <Card>
           <Table
             columns={myColumns}
