@@ -1,32 +1,39 @@
 import { Button, Card, Form, Layout, PageHeader, Table, Tag } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import { ColumnsType } from "antd/lib/table";
-import axios from "axios";
 import { FC, useEffect, useState } from "react";
+import PlacesService from "../api/PlacesService";
+import UserService from "../api/UserServise";
 import PlaceForm from "../components/forms/PlaceForm";
 import UserForm from "../components/forms/UserForm";
 import ModalWithForm from "../components/ModalWithForm";
 import SelectSearchMultiply from "../components/SelectSearchMultiply";
 import { IPlace } from "../models/IPlace";
-//import { cols } from "../data/tableUsersData";
 import { IUser } from "../models/IUser";
 
 const SettingsPage: FC = () => {
-  const [data, setData] = useState<IUser[]>([]);
+  const [usersData, setUsersData] = useState<IUser[]>([]);
   const [placesData, setPlacesData] = useState<IPlace[]>([]);
+  const [schoolsData, setSchoolsData] = useState<IPlace[]>([]);
 
   useEffect(() => {
     const getData = async () => {
-      const response = await axios.get<IUser[]>("./users.json");
-      setData(response.data);
+      const response = await UserService.getAllUsers();
+      setUsersData(response.data);
     };
 
     const getPlacesData = async () => {
-      const response = await axios.get<IPlace[]>("./places.json");
+      const response = await PlacesService.getPlaces();
       setPlacesData(response.data);
     };
-    getPlacesData();
 
+    const getSchoolsData = async () => {
+      const response = await PlacesService.getSchools();
+      setSchoolsData(response);
+    };
+
+    getPlacesData();
+    getSchoolsData();
     getData();
   }, []);
 
@@ -173,7 +180,7 @@ const SettingsPage: FC = () => {
               className="table-striped-rows"
               columns={cols1}
               size="middle"
-              dataSource={data}
+              dataSource={usersData}
               rowKey={(record) => record.id}
             />
           </Form>
@@ -182,7 +189,7 @@ const SettingsPage: FC = () => {
         <PageHeader
           ghost={false}
           title="Список учреждений"
-          subTitle="Учреждения ДО Белгородской области"
+          subTitle="Учреждения дополнительного образования Белгородской области"
           extra={[
             <Button type="primary" onClick={showModalPlace}>
               Добавить учреждение
@@ -195,7 +202,7 @@ const SettingsPage: FC = () => {
             className="table-striped-rows"
             columns={cols2}
             size="middle"
-            dataSource={placesData}
+            dataSource={schoolsData}
             rowKey={(record) => record.id}
           />
         </Card>
