@@ -1,21 +1,107 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Form, FormInstance, Input, Radio, Select } from "antd";
+import {
+  Checkbox,
+  Form,
+  FormInstance,
+  Input,
+  InputNumber,
+  Radio,
+  Row,
+  Select,
+  Typography,
+} from "antd";
 import { rules } from "../../utils/rules";
 import { IDirection } from "../../models/IDirection";
+import { IPlace } from "../../models/IPlace";
+import DirectionService from "../../api/DirectionsServise";
+import PlacesService from "../../api/PlacesService";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
 
 type Props = {
   form: FormInstance<any>;
-  directions: IDirection[];
 };
 const ProgramForm = (props: Props) => {
+  const { form } = props;
+  const [directions, setDirections] = useState<IDirection[]>([]);
+  const [placesData, setPlacesData] = useState<IPlace[]>([]);
+  const [isDisabled, setIsDisabled] = useState(false);
+  useEffect(() => {
+    const getDirectionsData = async () => {
+      const response = await DirectionService.getDirections();
+      setDirections(response.data);
+    };
+
+    const getPlacesData = async () => {
+      const response = await PlacesService.getPlaces();
+      setPlacesData(response.data);
+    };
+
+    getDirectionsData();
+    getPlacesData();
+  }, []);
+
+  const оnChangeCheckBox = (e: CheckboxChangeEvent) => {
+    if (e.target.checked) {
+      const schoolId = form.getFieldValue("id_place");
+      const schoolName = placesData.find(
+        (place) => place.id === schoolId
+      )?.name;
+      form.setFieldsValue({ school: schoolName, type_school: "3" });
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+      form.resetFields(["school", "type_school"]);
+    }
+  };
+
   return (
-    <Form form={props.form} layout="vertical" name="form_in_modal">
-      <Form.Item name="name" label="Название" rules={[rules.required()]}>
+    <Form form={form} layout="vertical" name="form_in_modal">
+      <Form.Item
+        name="name"
+        label="Название программы"
+        rules={[rules.required()]}
+      >
         <Input />
       </Form.Item>
-      <Form.Item name="school" label="Учреждение" rules={[rules.required()]}>
-        <Input />
+
+      <Form.Item
+        name="id_place"
+        label="Выберите район (или учреждение дополнительного образования)"
+        rules={[rules.required()]}
+      >
+        <Select>
+          {placesData.map((place) => (
+            <Select.Option value={place.id}>{place.name}</Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
+
+      <Form.Item>
+        <Checkbox onChange={оnChangeCheckBox}>
+          Добавить программу для этого учреждения
+        </Checkbox>
+      </Form.Item>
+
+      <Form.Item
+        name="school"
+        label="Наименование учреждения, в котором реализуется программа"
+        rules={[rules.required()]}
+      >
+        <Input disabled={isDisabled} />
+      </Form.Item>
+
+      <Form.Item
+        name="type_school"
+        label="Тип учреждения"
+        rules={[rules.required()]}
+      >
+        <Radio.Group disabled={isDisabled}>
+          <Radio value="1">Дошкольное</Radio>
+          <Radio value="2">Общеобразовательное</Radio>
+          <Radio value="3">Дополнительного образования</Radio>
+          <Radio value="4">СПО</Radio>
+        </Radio.Group>
       </Form.Item>
 
       <Form.Item
@@ -24,15 +110,21 @@ const ProgramForm = (props: Props) => {
         rules={[rules.required()]}
       >
         <Select>
-          {props.directions.map((direction) => (
+          {directions.map((direction) => (
             <Select.Option value={direction.id}>{direction.name}</Select.Option>
           ))}
         </Select>
       </Form.Item>
 
-      <Form.Item name="age" label="Возраст" rules={[rules.required()]}>
-        <Input />
-      </Form.Item>
+      <Typography.Paragraph>Возраст детей</Typography.Paragraph>
+      <Row justify="start">
+        <Form.Item name="start_age" rules={[rules.required()]}>
+          <InputNumber placeholder="От" className="inputs-in-group" min={0} />
+        </Form.Item>
+        <Form.Item name="end_age" rules={[rules.required()]}>
+          <InputNumber name="start_age" placeholder="До" min={0} />
+        </Form.Item>
+      </Row>
 
       <Form.Item
         name="programm_type"

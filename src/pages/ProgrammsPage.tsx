@@ -13,23 +13,19 @@ import { Content } from "antd/lib/layout/layout";
 import Table from "antd/lib/table";
 import React, { FC, useEffect, useState } from "react";
 import DirectionService from "../api/DirectionsServise";
+import PlacesService from "../api/PlacesService";
 import ProgramsService from "../api/ProgramsServise";
 import ProgramForm from "../components/forms/ProgramForm";
 import ModalWithForm from "../components/ModalWithForm";
 import { columns, IProgramDataType } from "../data/tableData";
 import { IDirection } from "../models/IDirection";
+import { IPlace } from "../models/IPlace";
 
 const ProgrammsPage: FC = () => {
-  const [directionsArr, setDirections] = useState<IDirection[]>([]);
   const [programmsData, setProgrammsData] = useState<IProgramDataType[]>([]);
 
   // получение списка направлений и программ
   useEffect(() => {
-    const getDirectionsData = async () => {
-      const response = await DirectionService.getDirections();
-      setDirections(response.data);
-    };
-
     const getProgrammsData = async () => {
       const response = await ProgramsService.getProgramms();
       const newData: IProgramDataType[] = response.data.map((val, index) => {
@@ -39,7 +35,6 @@ const ProgrammsPage: FC = () => {
       // setProgramms(response.data);
     };
 
-    getDirectionsData();
     getProgrammsData();
   }, []);
 
@@ -115,7 +110,7 @@ const ProgrammsPage: FC = () => {
           setVisible={setIsModalVisible}
           onCreate={onCreate}
         >
-          <ProgramForm form={form} directions={directionsArr} />
+          <ProgramForm form={form} />
         </ModalWithForm>
       </Content>
     </Layout>
