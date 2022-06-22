@@ -28,3 +28,25 @@ body{
     background-color: #f0f0f0;
     color: rgba(0, 0, 0, 0.4);
 }
+
+/* rgba(214, 228, 255, 0.75) */
+.table-striped-rows tr:nth-child(2n) td {
+    background-color:#f0f5ff;
+}
+
+
+.table-striped-rows thead {
+    background-color: #d6e4ff;
+}
+
+.inputs-in-group {
+    margin-right: 50px
+}
+
+
+.input-group > .ant-row {
+    margin-right: 50px;
+}
+.site-page-header{
+    background-color: #fff;
+}

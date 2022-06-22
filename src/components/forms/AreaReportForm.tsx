@@ -50,14 +50,14 @@ const AreaReportForm = (props: Props) => {
               label="по ДО(О)П"
               rules={[rules.required()]}
             >
-              <InputNumber min={0} />
+              <InputNumber className="inputs-in-group" min={0} />
             </Form.Item>
             <Form.Item
               name="1_ADOOP"
               label="по АДО(О)П"
               rules={[rules.required()]}
             >
-              <InputNumber min={0} />
+              <InputNumber className="inputs-in-group" min={0} />
             </Form.Item>
           </Input.Group>
         </Col>
@@ -71,14 +71,14 @@ const AreaReportForm = (props: Props) => {
               label="по ДО(О)П"
               rules={[rules.required()]}
             >
-              <InputNumber min={0} />
+              <InputNumber className="inputs-in-group" min={0} />
             </Form.Item>
             <Form.Item
               name="2_ADOOP"
               label="по АДО(О)П"
               rules={[rules.required()]}
             >
-              <InputNumber min={0} />
+              <InputNumber className="inputs-in-group" min={0} />
             </Form.Item>
           </Input.Group>
         </Col>
@@ -95,14 +95,14 @@ const AreaReportForm = (props: Props) => {
               label="по ДО(О)П"
               rules={[rules.required()]}
             >
-              <InputNumber min={0} />
+              <InputNumber className="inputs-in-group" min={0} />
             </Form.Item>
             <Form.Item
               name="3_ADOOP"
               label="по АДО(О)П"
               rules={[rules.required()]}
             >
-              <InputNumber min={0} />
+              <InputNumber className="inputs-in-group" min={0} />
             </Form.Item>
           </Input.Group>
         </Col>
@@ -114,14 +114,14 @@ const AreaReportForm = (props: Props) => {
               label="по ДО(О)П"
               rules={[rules.required()]}
             >
-              <InputNumber min={0} />
+              <InputNumber className="inputs-in-group" min={0} />
             </Form.Item>
             <Form.Item
               name="4_ADOOP"
               label="по АДО(О)П"
               rules={[rules.required()]}
             >
-              <InputNumber min={0} />
+              <InputNumber className="inputs-in-group" min={0} />
             </Form.Item>
           </Input.Group>
         </Col>

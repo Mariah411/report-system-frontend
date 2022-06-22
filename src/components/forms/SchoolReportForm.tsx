@@ -42,14 +42,14 @@ const SchoolReportForm = (props: Props) => {
           label="по ДО(О)П"
           rules={[rules.required()]}
         >
-          <InputNumber defaultValue={0} min={0} />
+          <InputNumber className="inputs-in-group" defaultValue={0} min={0} />
         </Form.Item>
         <Form.Item
           name="school_ADOOP"
           label="по АДО(О)П"
           rules={[rules.required()]}
         >
-          <InputNumber defaultValue={0} min={0} />
+          <InputNumber className="inputs-in-group" defaultValue={0} min={0} />
         </Form.Item>
       </Input.Group>
       <Button type="primary" onClick={save}>

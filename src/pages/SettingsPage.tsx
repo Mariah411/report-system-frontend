@@ -170,6 +170,7 @@ const SettingsPage: FC = () => {
         <Card>
           <Form form={editForm} component={false}>
             <Table
+              className="table-striped-rows"
               columns={cols1}
               size="middle"
               dataSource={data}
@@ -191,6 +192,7 @@ const SettingsPage: FC = () => {
 
         <Card>
           <Table
+            className="table-striped-rows"
             columns={cols2}
             size="middle"
             dataSource={placesData}

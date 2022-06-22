@@ -1,4 +1,4 @@
-import { Button, Card, Layout, message, Steps } from "antd";
+import { Button, Card, Layout, message, PageHeader, Steps } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { Content } from "antd/lib/layout/layout";
 import { FC, useEffect, useState } from "react";
@@ -63,6 +63,12 @@ const ReportPage: FC = () => {
     <Layout className="layout_m">
       <Content className="content_m-20">
         <div className="forms-container">
+          <PageHeader
+            className="site-page-header"
+            onBack={() => null}
+            title="Отчет 2022 1 полугодие"
+          />
+
           <Card>
             <Steps current={current}>
               {steps.map((item) => (

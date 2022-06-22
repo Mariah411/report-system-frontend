@@ -42,7 +42,12 @@ const EventPage: FC = () => {
           ]}
         />
         <Card>
-          <Table columns={columns} size="middle" dataSource={data} />
+          <Table
+            className="table-striped-rows"
+            columns={columns}
+            size="middle"
+            dataSource={data}
+          />
         </Card>
 
         <ModalWithForm

@@ -100,6 +100,7 @@ const ProgrammsPage: FC = () => {
         />
         <Card>
           <Table
+            className="table-striped-rows"
             columns={myColumns}
             size="middle"
             dataSource={programmsData}
