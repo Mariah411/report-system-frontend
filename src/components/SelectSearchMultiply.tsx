@@ -1,6 +1,4 @@
 import { FormInstance, Select, Tag } from "antd";
-import React, { FC } from "react";
-import { IPlace } from "../models/IPlace";
 import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 
 const onSearch = (value: string) => {
@@ -22,7 +20,7 @@ const tagRender = (props: CustomTagProps) => {
 };
 
 type Props = {
-  data: IPlace[] | [{ id: number | string; name: string }];
+  data: { id: number | string; name: string }[];
   form: FormInstance<any>;
   selectedValues: number[];
   fieldName: string;

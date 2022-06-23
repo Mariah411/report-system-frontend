@@ -17,6 +17,8 @@ import { IPlace } from "../../models/IPlace";
 import DirectionService from "../../api/DirectionsServise";
 import PlacesService from "../../api/PlacesService";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import SelectSearch from "../SelectSearch";
+import { idText } from "typescript";
 
 type Props = {
   form: FormInstance<any>;
@@ -70,11 +72,7 @@ const ProgramForm = (props: Props) => {
         label="Выберите район (или учреждение дополнительного образования)"
         rules={[rules.required()]}
       >
-        <Select>
-          {placesData.map((place) => (
-            <Select.Option value={place.id}>{place.name}</Select.Option>
-          ))}
-        </Select>
+        <SelectSearch form={form} data={placesData} fieldName="id_place" />
       </Form.Item>
 
       <Form.Item>
@@ -105,15 +103,11 @@ const ProgramForm = (props: Props) => {
       </Form.Item>
 
       <Form.Item
-        name="direction"
+        name="id_direction"
         label="Направление"
         rules={[rules.required()]}
       >
-        <Select>
-          {directions.map((direction) => (
-            <Select.Option value={direction.id}>{direction.name}</Select.Option>
-          ))}
-        </Select>
+        <SelectSearch form={form} data={directions} fieldName="id_direction" />
       </Form.Item>
 
       <Typography.Paragraph>Возраст детей</Typography.Paragraph>
