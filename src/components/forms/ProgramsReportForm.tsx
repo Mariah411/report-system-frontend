@@ -72,16 +72,7 @@ const ProgramsReportForm = (props: Props) => {
       dataIndex: "num",
       render: (_: any, record: { id: number }) => (
         <Form.Item name={record.id}>
-          <InputNumber
-            defaultValue={0}
-            min={0}
-            disabled={isDisabled(record.id)}
-          />
-          {/* {isDisabled(record.id) ? (
-            <InputNumber value={0} defaultValue={0} min={0} disabled />
-          ) : (
-            <InputNumber defaultValue={0} min={0} />
-          )} */}
+          <InputNumber min={0} disabled={isDisabled(record.id)} />
         </Form.Item>
       ),
     },

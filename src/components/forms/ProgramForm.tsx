@@ -19,6 +19,7 @@ import PlacesService from "../../api/PlacesService";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import SelectSearch from "../SelectSearch";
 import { idText } from "typescript";
+import { useTypedSelector } from "../../hooks/useTypedSelectror";
 
 type Props = {
   form: FormInstance<any>;
@@ -26,21 +27,20 @@ type Props = {
 const ProgramForm = (props: Props) => {
   const { form } = props;
   const [directions, setDirections] = useState<IDirection[]>([]);
-  const [placesData, setPlacesData] = useState<IPlace[]>([]);
   const [isDisabled, setIsDisabled] = useState(false);
+
+  // получение мест пользователя
+  const placesData: IPlace[] = useTypedSelector(
+    (state) => state.auth.user.places
+  );
+
   useEffect(() => {
     const getDirectionsData = async () => {
       const response = await DirectionService.getDirections();
       setDirections(response.data);
     };
 
-    const getPlacesData = async () => {
-      const response = await PlacesService.getPlaces();
-      setPlacesData(response.data);
-    };
-
     getDirectionsData();
-    getPlacesData();
   }, []);
 
   const оnChangeCheckBox = (e: CheckboxChangeEvent) => {
@@ -65,6 +65,14 @@ const ProgramForm = (props: Props) => {
         rules={[rules.required()]}
       >
         <Input />
+      </Form.Item>
+
+      <Form.Item
+        name="id_nav"
+        label="ID в АИС Навигатор"
+        rules={[rules.required()]}
+      >
+        <InputNumber min={0} />
       </Form.Item>
 
       <Form.Item
