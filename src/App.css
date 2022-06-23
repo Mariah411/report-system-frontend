@@ -43,10 +43,19 @@ body{
     margin-right: 50px
 }
 
+.my_segment{
+    margin-left: 50px;
+}
+
 
 .input-group > .ant-row {
     margin-right: 50px;
 }
 .site-page-header{
     background-color: #fff;
+}
+
+.cards-container{
+    max-width: 1400px;
+    margin: 0 auto;
 }
