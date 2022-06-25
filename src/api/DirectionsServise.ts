@@ -3,6 +3,6 @@ import { IDirection } from "../models/IDirection";
 
 export default class DirectionService {
   static async getDirections(): Promise<AxiosResponse<IDirection[]>> {
-    return await axios.get<IDirection[]>("./directions.json");
+    return await axios.get<IDirection[]>("/direction");
   }
 }
