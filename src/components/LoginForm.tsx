@@ -42,6 +42,7 @@ const LoginForm: FC = () => {
       >
         <Form.Item rules={[{ required: true, message: "Введите логин" }]}>
           <Input
+            type="email"
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

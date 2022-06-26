@@ -1,5 +1,6 @@
+import { IPlaceType } from "./IPlaceType";
 export interface IPlace {
   id: number;
   name: string;
-  type: number;
+  place_type: IPlaceType;
 }

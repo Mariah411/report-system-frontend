@@ -27,6 +27,7 @@ import { MyData } from "../data/cardsData";
 import ModalWithForm from "../components/ModalWithForm";
 import { useForm } from "antd/lib/form/Form";
 import TaskForm from "../components/forms/TaskForm";
+import { checkRoles } from "../utils/checkRoles";
 
 /*страница заданий*/
 
@@ -37,7 +38,9 @@ const TasksPage: FC = () => {
 
   const user: IUser = useTypedSelector((state) => state.auth.user);
 
-  const isAdmin = user.roles.includes("admin");
+  const isAdmin: boolean = checkRoles(user, "ADMIN");
+
+  // const isAdmin = user.roles.includes("admin");
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 

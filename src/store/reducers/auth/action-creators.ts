@@ -7,12 +7,26 @@ import {
   SetErrorAction,
   SetAuthAction,
 } from "./types";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { join } from "path";
+
+import jwt_decode from "jwt-decode";
 
 //action-creator (создание действий)
 //с указанием какие данные принимаает, что возвращает
+interface loginResponse {
+  token: string;
 
+  message: string;
+}
+
+// interface customError<AxiosError>{
+//   response:{
+//     data:{
+//       message: string
+//     }
+//   }
+// }
 export const AuthActionCreators = {
   setUser: (user: IUser): SetUserAction => ({
     type: AuthActionEnum.SET_USER,
@@ -37,35 +51,28 @@ export const AuthActionCreators = {
     try {
       dispatch(AuthActionCreators.setIsLoading(true));
 
-      // получение моковых данных (заменить)
-      setTimeout(async () => {
-        // заменить
-        const response = await axios.get<IUser[]>("./users.json");
-        const mokUser = response.data.find(
-          (user) => user.email === email && user.password === password
-        );
+      const { data } = await axios.post<loginResponse>("api/v1/auth/login", {
+        mail: email,
+        password: password,
+      });
 
-        if (mokUser) {
-          localStorage.setItem("auth", "true");
-          localStorage.setItem("email", email);
-          localStorage.setItem("roles", mokUser.roles.join(" "));
-          localStorage.setItem("fio", mokUser.fio);
-          console.log(mokUser.places);
-          localStorage.setItem("places", JSON.stringify(mokUser.places));
+      console.log(jwt_decode(data.token));
 
-          //localStorage.setItem("roles", mokUser.places.join(", "));
-          // let userPlaces: string[] = [];
-          // mokUser.places.map((place) => userPlaces.push(place.name));
-          // localStorage.setItem("places", userPlaces.join(", "));
-          dispatch(AuthActionCreators.setAuth(true));
-          dispatch(AuthActionCreators.setUser(mokUser));
-        } else {
-          dispatch(AuthActionCreators.setError("Неверный логин или пароль"));
-        }
-        dispatch(AuthActionCreators.setIsLoading(false));
-      }, 1000);
-    } catch (e) {
-      dispatch(AuthActionCreators.setError("Произошла ошибка"));
+      localStorage.setItem("token", data.token);
+
+      const user: IUser = jwt_decode(data.token);
+
+      dispatch(AuthActionCreators.setUser(user));
+      dispatch(AuthActionCreators.setAuth(true));
+      dispatch(AuthActionCreators.setIsLoading(false));
+    } catch (e: any) {
+      const err = e as AxiosError<loginResponse>;
+      //console.log(err);
+
+      if (typeof err.response?.data.message === "string") {
+        dispatch(AuthActionCreators.setError(err.response?.data.message));
+      }
+      //dispatch(AuthActionCreators.setError(e.response.message));
       dispatch(AuthActionCreators.setIsLoading(false));
     }
   },
@@ -73,11 +80,7 @@ export const AuthActionCreators = {
   // выход из системы
   logout: () => async (dispatch: AppDispatch) => {
     try {
-      localStorage.removeItem("auth");
-      localStorage.removeItem("email");
-      localStorage.removeItem("roles");
-      localStorage.removeItem("fio");
-      localStorage.removeItem("places");
+      localStorage.removeItem("token");
       dispatch(AuthActionCreators.setUser({} as IUser));
       dispatch(AuthActionCreators.setAuth(false));
     } catch (e) {

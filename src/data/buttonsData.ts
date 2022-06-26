@@ -9,6 +9,7 @@ import {
 import { IMenuButton } from "../models/IMenuButton";
 import { IUser } from "../models/IUser";
 import { RouteNames } from "../router/routeNames";
+import { checkRoles } from "../utils/checkRoles";
 
 export let menuButtonsUser: IMenuButton[] = [
   {
@@ -127,9 +128,12 @@ let menuButtonsUserAdmin: IMenuButton[] = [
 ];
 
 export function getButtonsMenu(user: IUser): IMenuButton[] {
-  const isUser: boolean = user.roles.includes("user");
+  const isUser: boolean = checkRoles(user, "USER");
+  const isAdmin: boolean = checkRoles(user, "ADMIN");
 
-  const isAdmin: boolean = user.roles.includes("admin");
+  // const isUser: boolean = user.roles.includes("user");
+
+  // const isAdmin: boolean = user.roles.includes("admin");
 
   if (isUser && isAdmin) {
     return menuButtonsUserAdmin;

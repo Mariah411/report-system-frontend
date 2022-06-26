@@ -1,3 +1,4 @@
+import { IRole } from "./IRole";
 import { IPlace } from "./IPlace";
 // модель пользователя
 export interface IUser {
@@ -5,7 +6,8 @@ export interface IUser {
   email: string;
   password: string;
   fio: string;
-  roles: string[];
+  roles: IRole[];
+  //roles: string[];
   //places: string[];
   places: IPlace[];
 }

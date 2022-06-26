@@ -8,7 +8,9 @@ export default class PlacesService {
 
   static async getSchools(): Promise<IPlace[]> {
     const response = await this.getPlaces();
-    const SchoolsData = response.data.filter((place) => place.type === 2);
+    const SchoolsData = response.data.filter(
+      (place) => place.place_type.id === 2
+    );
     return SchoolsData;
   }
 }
