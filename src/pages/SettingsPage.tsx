@@ -8,16 +8,19 @@ import PlaceForm from "../components/forms/PlaceForm";
 import UserForm from "../components/forms/UserForm";
 import ModalWithForm from "../components/ModalWithForm";
 import SelectSearchMultiply from "../components/SelectSearchMultiply";
-import { IPlace } from "../models/IPlace";
+import { colsArea, colsSchool } from "../data/placesTableData";
+import { IPlace, PlaceAdmin } from "../models/IPlace";
+import { IRole } from "../models/IRole";
 import { IUser } from "../models/IUser";
 
 const SettingsPage: FC = () => {
   const [usersData, setUsersData] = useState<IUser[]>([]);
-  const [placesData, setPlacesData] = useState<IPlace[]>([]);
-  const [schoolsData, setSchoolsData] = useState<IPlace[]>([]);
+  const [placesData, setPlacesData] = useState<PlaceAdmin[]>([]);
+  const [schoolsData, setSchoolsData] = useState<PlaceAdmin[]>([]);
+  const [areasData, setAreasData] = useState<PlaceAdmin[]>([]);
 
   useEffect(() => {
-    const getData = async () => {
+    const getUsersData = async () => {
       const response = await UserService.getAllUsers();
       setUsersData(response.data);
     };
@@ -32,9 +35,15 @@ const SettingsPage: FC = () => {
       setSchoolsData(response);
     };
 
+    const getAreaData = async () => {
+      const response = await PlacesService.getAreas();
+      setAreasData(response);
+    };
+
     getPlacesData();
     getSchoolsData();
-    getData();
+    getUsersData();
+    getAreaData();
   }, []);
 
   const [editingRow, setEditingRow] = useState<number>(0);
@@ -50,11 +59,11 @@ const SettingsPage: FC = () => {
     }
   };
 
-  const renderStringTags = (array: string[]) => {
+  const renderStringTags = (array: { id: number; name: string }[]) => {
     {
       return array.map((item) => (
-        <Tag color="geekblue" key={item}>
-          {item}
+        <Tag color="geekblue" key={item.id}>
+          {item.name}
         </Tag>
       ));
     }
@@ -64,22 +73,28 @@ const SettingsPage: FC = () => {
   const cols1: ColumnsType<IUser> = [
     {
       title: "ФИО",
-      dataIndex: "fio",
-      key: "fio",
+      dataIndex: "FIO",
+      key: "FIO",
+      width: "25%",
+    },
+
+    {
+      title: "Email",
+      dataIndex: "mail",
+      key: "mail",
       width: "25%",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-      width: "25%",
+      title: "Пароль",
+      dataIndex: "password",
+      key: "password",
     },
     {
       title: "Роли",
       dataIndex: "roles",
       key: "roles",
       width: "15%",
-      render: (roles: string[]) => <>{renderStringTags(roles)}</>,
+      render: (roles: IRole[]) => <>{renderStringTags(roles)}</>,
     },
     {
       title: "Места",
@@ -121,27 +136,20 @@ const SettingsPage: FC = () => {
     },
   ];
 
-  const cols2: ColumnsType<IPlace> = [
-    {
-      title: "id",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Название района/учреждения",
-      dataIndex: "name",
-      key: "name",
-    },
-  ];
-
+  // модальные окна
   const [UserModVisible, setUserModVisible] = useState(false);
-  const [PlaceModVisible, setPlaceModVisible] = useState(false);
+  const [SchoolModVisible, setSchoolModVisible] = useState(false);
+  const [AreaModVisible, setAreaModVisible] = useState(false);
 
   const showModalUser = () => {
     setUserModVisible(true);
   };
-  const showModalPlace = () => {
-    setPlaceModVisible(true);
+  const showModalSchool = () => {
+    setSchoolModVisible(true);
+  };
+
+  const showModalArea = () => {
+    setAreaModVisible(true);
   };
 
   // добавление пользователя
@@ -151,13 +159,21 @@ const SettingsPage: FC = () => {
   };
 
   // добавление учреждения
-  const onCreatePlace = (values: any) => {
+  const onCreateSchool = (values: any) => {
     console.log("Учреждение: ", values);
-    setPlaceModVisible(false);
+    setSchoolModVisible(false);
   };
 
+  // добавление учреждения
+  const onCreateArea = (values: any) => {
+    console.log("Район: ", values);
+    setAreaModVisible(false);
+  };
+
+  // формы
   const [formUser] = Form.useForm();
   const [formPlace] = Form.useForm();
+  const [formArea] = Form.useForm();
 
   const onSearch = (value: string) => console.log(value);
 
@@ -191,7 +207,7 @@ const SettingsPage: FC = () => {
           title="Список учреждений"
           subTitle="Учреждения дополнительного образования Белгородской области"
           extra={[
-            <Button type="primary" onClick={showModalPlace}>
+            <Button type="primary" onClick={showModalSchool}>
               Добавить учреждение
             </Button>,
           ]}
@@ -200,9 +216,30 @@ const SettingsPage: FC = () => {
         <Card>
           <Table
             className="table-striped-rows"
-            columns={cols2}
+            columns={colsSchool}
             size="middle"
             dataSource={schoolsData}
+            rowKey={(record) => record.id}
+          />
+        </Card>
+
+        <PageHeader
+          ghost={false}
+          title="Список районов"
+          subTitle="Районы Белгородской области, в которых проводится мониториг"
+          extra={[
+            <Button type="primary" onClick={showModalArea}>
+              Добавить район
+            </Button>,
+          ]}
+        />
+
+        <Card>
+          <Table
+            className="table-striped-rows"
+            columns={colsArea}
+            size="middle"
+            dataSource={areasData}
             rowKey={(record) => record.id}
           />
         </Card>
@@ -219,15 +256,21 @@ const SettingsPage: FC = () => {
 
         <ModalWithForm
           title="Новое учреждение"
-          isVisible={PlaceModVisible}
+          isVisible={SchoolModVisible}
           form={formPlace}
-          setVisible={setPlaceModVisible}
-          onCreate={onCreatePlace}
+          setVisible={setSchoolModVisible}
+          onCreate={onCreateSchool}
         >
-          <>
-            {/* <Search placeholder="input search text" onSearch={onSearch} style={{ width: 200 }} /> */}
-            <PlaceForm form={formPlace} />
-          </>
+          <PlaceForm form={formPlace} label="Название учреждения" />
+        </ModalWithForm>
+        <ModalWithForm
+          title="Новый район"
+          isVisible={AreaModVisible}
+          form={formArea}
+          setVisible={setAreaModVisible}
+          onCreate={onCreateArea}
+        >
+          <PlaceForm form={formArea} label="Название района" />
         </ModalWithForm>
       </Content>
     </Layout>

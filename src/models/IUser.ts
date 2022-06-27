@@ -1,9 +1,10 @@
+import { ITask } from "./ITask";
 import { IRole } from "./IRole";
 import { IPlace } from "./IPlace";
 // модель пользователя
 export interface IUser {
   id: number;
-  email: string;
+  mail: string;
   password: string;
   fio: string;
   roles: IRole[];
@@ -11,3 +12,5 @@ export interface IUser {
   //places: string[];
   places: IPlace[];
 }
+
+export type UserEdit = IUser & { tasks: ITask[] };

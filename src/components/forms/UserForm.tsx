@@ -6,7 +6,7 @@ import { rules } from "../../utils/rules";
 import SelectSearchMultiply from "../SelectSearchMultiply";
 type Props = {
   form: FormInstance<any>;
-  places: IPlace[];
+  places: { id: number; name: string }[];
 };
 
 const UserForm = (props: Props) => {
