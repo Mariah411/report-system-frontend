@@ -1,4 +1,4 @@
-import { FormInstance, Select, Tag } from "antd";
+import { FormInstance, Select, Tag, Typography } from "antd";
 import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 
 const onSearch = (value: string) => {
@@ -9,12 +9,15 @@ const tagRender = (props: CustomTagProps) => {
   const { label, value, closable, onClose } = props;
   return (
     <Tag
-      color="geekblue"
+      color="magenta"
       closable={closable}
       onClose={onClose}
       style={{ marginRight: 3 }}
     >
       {label}
+      {/* <Typography.Text style={{ width: 100 }} ellipsis>
+        {label}
+      </Typography.Text> */}
     </Tag>
   );
 };

@@ -1,4 +1,14 @@
-import { Button, Card, Form, Layout, PageHeader, Table, Tag } from "antd";
+import {
+  Button,
+  Card,
+  Form,
+  FormInstance,
+  Layout,
+  PageHeader,
+  Row,
+  Table,
+  Tag,
+} from "antd";
 import { Content } from "antd/lib/layout/layout";
 import { ColumnsType } from "antd/lib/table";
 import { FC, useEffect, useState } from "react";
@@ -14,13 +24,25 @@ import { IRole } from "../models/IRole";
 import { IUser } from "../models/IUser";
 
 const SettingsPage: FC = () => {
+  // данные о местах и пользователях
   const [usersData, setUsersData] = useState<IUser[]>([]);
   const [placesData, setPlacesData] = useState<PlaceAdmin[]>([]);
   const [schoolsData, setSchoolsData] = useState<PlaceAdmin[]>([]);
   const [areasData, setAreasData] = useState<PlaceAdmin[]>([]);
+  // const [isLoadingTables, setIsLoadingTables] = useState({
+  //   users: true,
+  //   schools: true,
+  //   areas: true,
+  // });
 
+  // загрузка данных
   useEffect(() => {
     const getUsersData = async () => {
+      // setIsLoadingTables({ ...isLoadingTables, users: true });
+      // const response = await UserService.getAllUsers();
+      // setUsersData(response.data);
+      // setIsLoadingTables({ ...isLoadingTables, users: false });
+
       const response = await UserService.getAllUsers();
       setUsersData(response.data);
     };
@@ -31,11 +53,21 @@ const SettingsPage: FC = () => {
     };
 
     const getSchoolsData = async () => {
+      // setIsLoadingTables({ ...isLoadingTables, schools: true });
+      // const response = await PlacesService.getSchools();
+      // setSchoolsData(response);
+      // setIsLoadingTables({ ...isLoadingTables, schools: false });
+
       const response = await PlacesService.getSchools();
       setSchoolsData(response);
     };
 
     const getAreaData = async () => {
+      // setIsLoadingTables({ ...isLoadingTables, areas: true });
+      // const response = await PlacesService.getAreas();
+      // setAreasData(response);
+      // setIsLoadingTables({ ...isLoadingTables, areas: false });
+
       const response = await PlacesService.getAreas();
       setAreasData(response);
     };
@@ -46,23 +78,32 @@ const SettingsPage: FC = () => {
     getAreaData();
   }, []);
 
+  // форма для редактирования
   const [editingRow, setEditingRow] = useState<number>(0);
   const [editForm] = Form.useForm();
 
-  const renderArrayTags = (array: IPlace[]) => {
-    {
-      return array.map((item) => (
-        <Tag color="purple" key={item.id}>
-          {item.name}
-        </Tag>
-      ));
-    }
+  const onEditUser = (form: FormInstance<any>, user_id: number) => {
+    form.setFieldsValue({ account_id: user_id });
+    form
+      .validateFields()
+      .then((values: any) => {
+        form.resetFields();
+        setEditingRow(0);
+        console.log("Данные для редактирования пользователя", values);
+      })
+      .catch((info: any) => {
+        console.log("Ошибка:", info);
+      });
   };
 
-  const renderStringTags = (array: { id: number; name: string }[]) => {
+  // отрисовка тегов
+  const renderStringTags = (
+    array: { id: number; name: string }[],
+    color: string
+  ) => {
     {
       return array.map((item) => (
-        <Tag color="geekblue" key={item.id}>
+        <Tag color={color} key={item.id}>
           {item.name}
         </Tag>
       ));
@@ -75,32 +116,33 @@ const SettingsPage: FC = () => {
       title: "ФИО",
       dataIndex: "FIO",
       key: "FIO",
-      width: "25%",
+      width: "15%",
     },
 
     {
       title: "Email",
       dataIndex: "mail",
       key: "mail",
-      width: "25%",
+      width: "15%",
     },
     {
       title: "Пароль",
       dataIndex: "password",
       key: "password",
+      width: "15%",
     },
     {
       title: "Роли",
       dataIndex: "roles",
       key: "roles",
       width: "15%",
-      render: (roles: IRole[]) => <>{renderStringTags(roles)}</>,
+      render: (roles: IRole[]) => <>{renderStringTags(roles, "purple")}</>,
     },
     {
       title: "Места",
       dataIndex: "places",
       key: "places",
-      width: "25%",
+      width: "20%",
       render: (places: IPlace[], record) => {
         let recordPlaces: number[] = [];
         record.places.map((place) => recordPlaces.push(place.id));
@@ -115,7 +157,7 @@ const SettingsPage: FC = () => {
             />
           </Form.Item>
         ) : (
-          <>{renderArrayTags(places)}</>
+          <>{renderStringTags(places, "geekblue")}</>
         );
       },
     },
@@ -123,16 +165,36 @@ const SettingsPage: FC = () => {
     {
       title: "",
       dataIndex: "",
-      width: "10%",
-      render: (_: any, record) => (
-        <Button
-          onClick={() => {
-            setEditingRow(record.id);
-          }}
-        >
-          Редактировать
-        </Button>
-      ),
+      width: "20%",
+      render: (_: any, record) => {
+        return record.id === editingRow ? (
+          <Row justify="center">
+            <Button
+              type="primary"
+              onClick={() => {
+                onEditUser(editForm, record.id);
+              }}
+            >
+              Сохранить
+            </Button>
+            <Button
+              onClick={() => {
+                setEditingRow(0);
+              }}
+            >
+              Отмена
+            </Button>
+          </Row>
+        ) : (
+          <Button
+            onClick={() => {
+              setEditingRow(record.id);
+            }}
+          >
+            Редактировать
+          </Button>
+        );
+      },
     },
   ];
 
@@ -192,7 +254,9 @@ const SettingsPage: FC = () => {
         />
         <Card>
           <Form form={editForm} component={false}>
+            <Form.Item name="account_id" hidden></Form.Item>
             <Table
+              // loading={isLoadingTables.users}
               className="table-striped-rows"
               columns={cols1}
               size="middle"
@@ -215,6 +279,7 @@ const SettingsPage: FC = () => {
 
         <Card>
           <Table
+            // loading={isLoadingTables.schools}
             className="table-striped-rows"
             columns={colsSchool}
             size="middle"
@@ -236,6 +301,7 @@ const SettingsPage: FC = () => {
 
         <Card>
           <Table
+            // loading={isLoadingTables.areas}
             className="table-striped-rows"
             columns={colsArea}
             size="middle"

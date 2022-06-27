@@ -1,48 +1,33 @@
-import {
-  Layout,
-  Slider,
-  Menu,
-  Button,
-  Badge,
-  Card,
-  List,
-  Segmented,
-  PageHeader,
-} from "antd";
-import { Content, Footer, Header } from "antd/lib/layout/layout";
-import Sider from "antd/lib/layout/Sider";
-import { stringify } from "querystring";
+import { Button, Card, Layout, message, PageHeader, Segmented } from "antd";
+import { Content } from "antd/lib/layout/layout";
 
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import CardList from "../components/CardList";
-import MySider from "../components/UI/MySider";
-import MySlider from "../components/UI/MySider";
 import { useTypedSelector } from "../hooks/useTypedSelectror";
-import { IMenuButton } from "../models/IMenuButton";
 import { IUser } from "../models/IUser";
 //import { getButtonsMenu } from "../data/buttonsData";
 
-import { cardsData1, cardsData2, getCardsData } from "../data/cardsData";
-import { MyData } from "../data/cardsData";
-import ModalWithForm from "../components/ModalWithForm";
 import { useForm } from "antd/lib/form/Form";
+import TaskService from "../api/TaskServise";
 import TaskForm from "../components/forms/TaskForm";
+import ModalWithForm from "../components/ModalWithForm";
+import { TaskUser } from "../models/ITask";
 import { checkRoles } from "../utils/checkRoles";
 
 /*страница заданий*/
 
 const TasksPage: FC = () => {
-  const [tasks, setTasks] = useState<MyData[]>([]);
-
   const [typeTask, setTypeTask] = useState<string | number>("Активные");
 
   const user: IUser = useTypedSelector((state) => state.auth.user);
 
   const isAdmin: boolean = checkRoles(user, "ADMIN");
 
-  // const isAdmin = user.roles.includes("admin");
-
   const [isModalVisible, setIsModalVisible] = useState(false);
+  //const [tasks, setTasks] = useState();
+
+  const [activeTasks, setActiveTasks] = useState<TaskUser[]>([]);
+  const [doneTasks, setDoneTasks] = useState<TaskUser[]>([]);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -50,9 +35,33 @@ const TasksPage: FC = () => {
 
   const [form] = useForm();
 
-  // добавление программы (изменить)
-  const onCreate = (values: any) => {
-    console.log("Задание для добавления: ", values);
+  useEffect(() => {
+    const getTasks = async () => {
+      const response = await TaskService.getTasks();
+      const active = response.data.filter((task) => task.done === false);
+      const done = response.data.filter((task) => task.done === true);
+      setActiveTasks(active);
+      setDoneTasks(done);
+    };
+
+    getTasks();
+  }, []);
+
+  // добавление задания (изменить)
+  const onCreate = async (values: {
+    half_year: number;
+    year: string;
+    account_id: number;
+  }) => {
+    const { half_year, year, account_id } = values;
+    form.setFieldsValue({ account_id: user.id });
+    //console.log("Задание для добавления: ", values);
+    try {
+      const response = await TaskService.addTask(half_year, year, account_id);
+    } catch (e) {
+      message.error("Произошла ошибка при добавлении");
+    }
+
     setIsModalVisible(false);
   };
 
@@ -68,7 +77,7 @@ const TasksPage: FC = () => {
               extra={
                 isAdmin && [
                   <Button type="primary" onClick={showModal}>
-                    Добавить программу
+                    Добавить задание
                   </Button>,
                 ]
               }
@@ -84,15 +93,21 @@ const TasksPage: FC = () => {
           </Card>
 
           <div className="cards-container">
+            {/* <CardList
+              data={tasks}
+              buttonText="Добавить отчет"
+              typeTask={typeTask.toString()}
+            /> */}
+
             {typeTask === "Активные" ? (
               <CardList
-                data={cardsData1}
+                data={activeTasks}
                 buttonText="Добавить отчет"
                 typeTask={typeTask.toString()}
               />
             ) : (
               <CardList
-                data={cardsData2}
+                data={doneTasks}
                 buttonText="Посмотреть отчет"
                 typeTask={typeTask.toString()}
               />

@@ -5,3 +5,8 @@ export interface ITask {
   account_id: number;
   createdAt: string;
 }
+
+export type TaskUser = Omit<ITask, "account_id"> & {
+  account: { FIO: string };
+  done: boolean;
+};

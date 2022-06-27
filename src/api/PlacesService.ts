@@ -1,10 +1,13 @@
 import axios, { AxiosResponse } from "axios";
 import { $authHost } from "../http";
+// import { ReqConfig } from "../http";
+
 import { IPlace, PlaceAdmin } from "../models/IPlace";
 
 export default class PlacesService {
   static async getPlaces(): Promise<AxiosResponse<PlaceAdmin[]>> {
     return await $authHost.get<PlaceAdmin[]>("/api/v1/entity/place");
+    // return await axios.get<PlaceAdmin[]>("/api/v1/entity/place", ReqConfig);
   }
 
   // static getSchools(places: PlaceAdmin[]): PlaceAdmin[] {

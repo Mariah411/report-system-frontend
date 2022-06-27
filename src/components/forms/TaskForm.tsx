@@ -12,7 +12,7 @@ const TaskForm = (props: Props) => {
 
   const onChange: DatePickerProps["onChange"] = (date) => {
     if (date) {
-      const year = date.toDate().getFullYear();
+      const year = formatYear(date.toDate());
       console.log(year);
       form.setFieldsValue({ year: year });
     }
@@ -20,7 +20,9 @@ const TaskForm = (props: Props) => {
 
   return (
     <Form form={form} layout="vertical" name="form_in_modal">
-      <Form.Item label="Год отчета" name="year " rules={[rules.required()]}>
+      <Form.Item name="account_id" hidden></Form.Item>
+      <Form.Item name="year" hidden></Form.Item>
+      <Form.Item label="Год отчета" rules={[rules.required()]}>
         <DatePicker onChange={onChange} picker="year" />
       </Form.Item>
 

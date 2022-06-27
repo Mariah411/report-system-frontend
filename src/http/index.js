@@ -16,3 +16,7 @@ const authInterceptor = (config) => {
 $authHost.interceptors.request.use(authInterceptor);
 
 export { $host, $authHost };
+
+export const ReqConfig = {
+  headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+};
