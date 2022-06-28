@@ -48,16 +48,12 @@ const TasksPage: FC = () => {
   }, []);
 
   // добавление задания (изменить)
-  const onCreate = async (values: {
-    half_year: number;
-    year: number;
-    account_id: number;
-  }) => {
-    const { half_year, year, account_id } = values;
-    form.setFieldsValue({ account_id: user.id });
-    //console.log("Задание для добавления: ", values);
+  const onCreate = async (values: { half_year: number; year: number }) => {
+    const { half_year, year } = values;
+    // form.setFieldsValue({ account_id: user.id });
+    //console.log(user.id);
     try {
-      const response = await TaskService.addTask(+half_year, year, account_id);
+      const response = await TaskService.addTask(+half_year, year, user.id);
       form.resetFields();
       message.success("Задание успешно добавлено");
     } catch (e) {
@@ -87,7 +83,7 @@ const TasksPage: FC = () => {
             <div className="cards-container">
               <Segmented
                 className="my_segment"
-                options={["Активные", "Архив отчетов"]}
+                options={["Активные", "Мои ответы"]}
                 value={typeTask}
                 onChange={(e) => setTypeTask(e)}
               />

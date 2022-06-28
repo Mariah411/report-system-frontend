@@ -27,9 +27,6 @@ const TaskForm = (props: Props) => {
 
   return (
     <Form form={form} layout="vertical" name="form_in_modal">
-      <Form.Item name="account_id" hidden>
-        <Input type="hidden" />
-      </Form.Item>
       <Form.Item name="year" hidden>
         <Input type="hidden" />
       </Form.Item>
