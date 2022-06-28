@@ -18,6 +18,7 @@ import PlaceForm from "../components/forms/PlaceForm";
 import UserForm from "../components/forms/UserForm";
 import ModalWithForm from "../components/ModalWithForm";
 import SelectSearchMultiply from "../components/SelectSearchMultiply";
+import EllipsisText from "../components/UI/EllipsisText";
 import { colsArea, colsSchool } from "../data/placesTableData";
 import { IPlace, PlaceAdmin } from "../models/IPlace";
 import { IRole } from "../models/IRole";
@@ -104,7 +105,9 @@ const SettingsPage: FC = () => {
     {
       return array.map((item) => (
         <Tag color={color} key={item.id}>
-          {item.name}
+          <EllipsisText style={{ maxWidth: 300, color: color }}>
+            {item.name}
+          </EllipsisText>
         </Tag>
       ));
     }

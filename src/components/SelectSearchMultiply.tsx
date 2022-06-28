@@ -1,5 +1,6 @@
 import { FormInstance, Select, Tag, Typography } from "antd";
 import type { CustomTagProps } from "rc-select/lib/BaseSelect";
+import EllipsisText from "./UI/EllipsisText";
 
 const onSearch = (value: string) => {
   console.log("search:", value);
@@ -14,7 +15,8 @@ const tagRender = (props: CustomTagProps) => {
       onClose={onClose}
       style={{ marginRight: 3 }}
     >
-      {label}
+      <EllipsisText style={{ maxWidth: 300 }}>{label}</EllipsisText>
+
       {/* <Typography.Text style={{ width: 100 }} ellipsis>
         {label}
       </Typography.Text> */}

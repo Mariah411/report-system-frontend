@@ -8,13 +8,17 @@
 }
 
 .pin, .pin:hover, .pin:focus{
+
     margin: 5px;
     color: white;
-    background-color: #1d39c4;
     border: none;
     
 }
-
+.pin_text{
+    color: white;
+    max-width: 200px;
+    word-wrap: break-word;
+}
 .pin:hover, .pin:focus{
 
     cursor: default;

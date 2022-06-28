@@ -17,7 +17,6 @@ const ModalWithForm = (props: Props) => {
     form
       .validateFields()
       .then((values: any) => {
-        form.resetFields();
         onCreate(values);
       })
       .catch((info: any) => {

@@ -1,7 +1,7 @@
 import { PoweroffOutlined, UserOutlined } from "@ant-design/icons";
 import { Badge, Menu } from "antd";
 import Sider from "antd/lib/layout/Sider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { getButtonsMenu } from "../../data/buttonsData";
 import { useActions } from "../../hooks/useActions";
@@ -22,8 +22,6 @@ export default function MySider(props: Props) {
     getButtonsMenu(user)
   );
 
-  console.log(buttonsArr);
-
   const { logout } = useActions();
 
   return (
@@ -38,6 +36,8 @@ export default function MySider(props: Props) {
         bottom: 0,
       }}
     >
+      {/* <Menu theme="dark" mode="inline" items={menuItems}></Menu> */}
+
       <Menu theme="dark" mode="inline">
         <Menu.Item key="user" icon={<UserOutlined />}>
           <NavLink to={RouteNames.USER_ID}> {user.fio} </NavLink>
