@@ -14,6 +14,7 @@ import { Content } from "antd/lib/layout/layout";
 import { ColumnsType } from "antd/lib/table";
 import { FC, useEffect, useState } from "react";
 import PlacesService from "../api/PlacesService";
+import RolesService from "../api/RolesServise";
 import UserService from "../api/UserServise";
 import PlaceForm from "../components/forms/PlaceForm";
 import UserForm from "../components/forms/UserForm";
@@ -31,22 +32,20 @@ const SettingsPage: FC = () => {
   const [placesData, setPlacesData] = useState<PlaceAdmin[]>([]);
   const [schoolsData, setSchoolsData] = useState<PlaceAdmin[]>([]);
   const [areasData, setAreasData] = useState<PlaceAdmin[]>([]);
-  // const [isLoadingTables, setIsLoadingTables] = useState({
-  //   users: true,
-  //   schools: true,
-  //   areas: true,
-  // });
+  const [rolesData, setRolesData] = useState<IRole[]>([]);
+  const [isLoadingTables, setIsLoadingTables] = useState({
+    users: false,
+    schools: false,
+    areas: false,
+  });
 
   // загрузка данных
   useEffect(() => {
+    setIsLoadingTables({ users: true, schools: true, areas: true });
     const getUsersData = async () => {
-      // setIsLoadingTables({ ...isLoadingTables, users: true });
-      // const response = await UserService.getAllUsers();
-      // setUsersData(response.data);
-      // setIsLoadingTables({ ...isLoadingTables, users: false });
-
       const response = await UserService.getAllUsers();
       setUsersData(response.data);
+      setIsLoadingTables({ ...isLoadingTables, users: false });
     };
 
     const getPlacesData = async () => {
@@ -55,24 +54,22 @@ const SettingsPage: FC = () => {
     };
 
     const getSchoolsData = async () => {
-      // setIsLoadingTables({ ...isLoadingTables, schools: true });
-      // const response = await PlacesService.getSchools();
-      // setSchoolsData(response);
-      // setIsLoadingTables({ ...isLoadingTables, schools: false });
-
       const response = await PlacesService.getSchools();
       setSchoolsData(response);
+      setIsLoadingTables({ ...isLoadingTables, users: false });
     };
 
     const getAreaData = async () => {
-      // setIsLoadingTables({ ...isLoadingTables, areas: true });
-      // const response = await PlacesService.getAreas();
-      // setAreasData(response);
-      // setIsLoadingTables({ ...isLoadingTables, areas: false });
-
       const response = await PlacesService.getAreas();
       setAreasData(response);
+      setIsLoadingTables({ ...isLoadingTables, areas: false });
     };
+
+    const getRoles = async () => {
+      const response = await RolesService.getRoles();
+      setRolesData(response.data);
+    };
+    getRoles();
 
     getPlacesData();
     getSchoolsData();
@@ -140,7 +137,23 @@ const SettingsPage: FC = () => {
       dataIndex: "roles",
       key: "roles",
       width: "15%",
-      render: (roles: IRole[]) => <>{renderStringTags(roles, "purple")}</>,
+      render: (roles: IRole[], record) => {
+        let recordRoles: number[] = [];
+        record.roles.map((role) => recordRoles.push(role.id));
+        return record.id === editingRow ? (
+          <Form.Item name="roles">
+            <SelectSearchMultiply
+              fieldName="roles"
+              data={rolesData}
+              form={editForm}
+              selectedValues={recordRoles}
+            />
+          </Form.Item>
+        ) : (
+          <>{renderStringTags(roles, "purple")}</>
+        );
+      },
+      //  <>{renderStringTags(roles, "purple")}</>,
     },
     {
       title: "Места",
@@ -262,7 +275,7 @@ const SettingsPage: FC = () => {
               <Input type="hidden" />
             </Form.Item>
             <Table
-              // loading={isLoadingTables.users}
+              loading={isLoadingTables.users}
               className="table-striped-rows"
               columns={cols1}
               size="middle"
@@ -285,7 +298,7 @@ const SettingsPage: FC = () => {
 
         <Card>
           <Table
-            // loading={isLoadingTables.schools}
+            loading={isLoadingTables.schools}
             className="table-striped-rows"
             columns={colsSchool}
             size="middle"
@@ -307,7 +320,7 @@ const SettingsPage: FC = () => {
 
         <Card>
           <Table
-            // loading={isLoadingTables.areas}
+            loading={isLoadingTables.areas}
             className="table-striped-rows"
             columns={colsArea}
             size="middle"

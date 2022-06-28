@@ -1,4 +1,12 @@
-import { Button, Card, Layout, message, PageHeader, Segmented } from "antd";
+import {
+  Button,
+  Card,
+  Layout,
+  message,
+  PageHeader,
+  Segmented,
+  Spin,
+} from "antd";
 import { Content } from "antd/lib/layout/layout";
 
 import { FC, useEffect, useState } from "react";
@@ -28,6 +36,7 @@ const TasksPage: FC = () => {
 
   const [activeTasks, setActiveTasks] = useState<TaskUser[]>([]);
   const [doneTasks, setDoneTasks] = useState<TaskUser[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -36,12 +45,15 @@ const TasksPage: FC = () => {
   const [form] = useForm();
 
   useEffect(() => {
+    setIsLoading(true);
+
     const getTasks = async () => {
       const response = await TaskService.getTasks();
       const active = response.data.filter((task) => task.done === false);
       const done = response.data.filter((task) => task.done === true);
       setActiveTasks(active);
       setDoneTasks(done);
+      setIsLoading(false);
     };
 
     getTasks();
@@ -97,19 +109,21 @@ const TasksPage: FC = () => {
               typeTask={typeTask.toString()}
             /> */}
 
-            {typeTask === "Активные" ? (
-              <CardList
-                data={activeTasks}
-                buttonText="Добавить отчет"
-                typeTask={typeTask.toString()}
-              />
-            ) : (
-              <CardList
-                data={doneTasks}
-                buttonText="Посмотреть отчет"
-                typeTask={typeTask.toString()}
-              />
-            )}
+            <Spin spinning={isLoading}>
+              {typeTask === "Активные" ? (
+                <CardList
+                  data={activeTasks}
+                  buttonText="Добавить отчет"
+                  typeTask={typeTask.toString()}
+                />
+              ) : (
+                <CardList
+                  data={doneTasks}
+                  buttonText="Посмотреть отчет"
+                  typeTask={typeTask.toString()}
+                />
+              )}
+            </Spin>
           </div>
         </div>
 

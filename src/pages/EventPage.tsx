@@ -10,13 +10,21 @@ import {
   Typography,
 } from "antd";
 import { Content } from "antd/lib/layout/layout";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import EventForm from "../components/forms/EventForm";
 import ModalWithForm from "../components/ModalWithForm";
 import { columns, data } from "../data/tableEventsData";
 
 const EventPage: FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    // получение мероприятий добавить
+    setIsLoading(false);
+  }, []);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -43,6 +51,7 @@ const EventPage: FC = () => {
         />
         <Card>
           <Table
+            loading={isLoading}
             className="table-striped-rows"
             columns={columns}
             size="middle"

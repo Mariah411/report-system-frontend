@@ -1,40 +1,28 @@
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  Layout,
-  PageHeader,
-  Popconfirm,
-  Row,
-  Typography,
-} from "antd";
+import { Button, Card, Form, Layout, PageHeader, Popconfirm } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import Table from "antd/lib/table";
 import React, { FC, useEffect, useState } from "react";
-import DirectionService from "../api/DirectionsServise";
-import PlacesService from "../api/PlacesService";
 import ProgramsService from "../api/ProgramsServise";
 import ProgramForm from "../components/forms/ProgramForm";
 import ModalWithForm from "../components/ModalWithForm";
 import { columns, IProgramDataType } from "../data/tableData";
-import { IDirection } from "../models/IDirection";
-import { IPlace } from "../models/IPlace";
 
 const ProgrammsPage: FC = () => {
   const [programmsData, setProgrammsData] = useState<IProgramDataType[]>([]);
 
+  const [isLoading, setIsLoading] = useState(false);
   // получение списка направлений и программ
   useEffect(() => {
+    setIsLoading(true);
+
     const getProgrammsData = async () => {
       const response = await ProgramsService.getProgramms();
       const newData: IProgramDataType[] = response.data.map((val, index) => {
         return { key: index + 1, ...val };
       });
       setProgrammsData(newData);
-      // setProgramms(response.data);
+      setIsLoading(false);
     };
-
     getProgrammsData();
   }, []);
 
@@ -95,6 +83,7 @@ const ProgrammsPage: FC = () => {
         />
         <Card>
           <Table
+            loading={isLoading}
             className="table-striped-rows"
             columns={myColumns}
             size="middle"
