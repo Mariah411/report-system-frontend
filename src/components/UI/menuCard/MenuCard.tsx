@@ -26,7 +26,6 @@ const MenuCard: FC<Props> = (props: Props) => {
     { icon: <EnvironmentOutlined />, color: "#2b4acb" },
     { icon: <HomeOutlined />, color: "#d32029" },
   ];
-  //const icons = [<EnvironmentOutlined />, <HomeOutlined />];
   console.log(user.places);
   return (
     <>
@@ -36,8 +35,9 @@ const MenuCard: FC<Props> = (props: Props) => {
             {user.places.map((place) => {
               const type_id = place.place_type.id - 1;
               return (
-                <Col>
+                <Col key={place.id}>
                   <Tag
+                    key={place.id}
                     className={cl.pin}
                     icon={styles[type_id].icon}
                     color={styles[type_id].color}
@@ -45,17 +45,7 @@ const MenuCard: FC<Props> = (props: Props) => {
                     <EllipsisText style={{ maxWidth: 200, color: "white" }}>
                       {place.name}
                     </EllipsisText>
-                    {/* <Typography.Text
-                      style={{ maxWidth: 200, color: "white" }}
-                      ellipsis={{ tooltip: place.name }}
-                    >
-                      {place.name}
-                    </Typography.Text> */}
-                    {/* <span className={cl.pin_text}>{place.name}</span> */}
                   </Tag>
-                  {/* <Button className={cl.pin} size="small" shape="round">
-                  {place.name}
-                </Button> */}
                 </Col>
               );
             })}

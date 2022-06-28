@@ -78,7 +78,7 @@ const TasksPage: FC = () => {
               subTitle="Активные задания, архив отчетов"
               extra={
                 isAdmin && [
-                  <Button type="primary" onClick={showModal}>
+                  <Button key="1" type="primary" onClick={showModal}>
                     Добавить задание
                   </Button>,
                 ]

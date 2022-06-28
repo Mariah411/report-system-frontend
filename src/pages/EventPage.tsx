@@ -36,7 +36,7 @@ const EventPage: FC = () => {
           ghost={false}
           title="Мероприятия"
           extra={[
-            <Button type="primary" onClick={showModal}>
+            <Button key="1" type="primary" onClick={showModal}>
               Добавить мероприятие
             </Button>,
           ]}

@@ -88,7 +88,7 @@ const ProgrammsPage: FC = () => {
           ghost={false}
           title="Образовательные программы"
           extra={[
-            <Button type="primary" onClick={showModal}>
+            <Button key="1" type="primary" onClick={showModal}>
               Добавить программу
             </Button>,
           ]}

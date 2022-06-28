@@ -3,6 +3,7 @@ import {
   Card,
   Form,
   FormInstance,
+  Input,
   Layout,
   PageHeader,
   Row,
@@ -250,14 +251,16 @@ const SettingsPage: FC = () => {
           title="Управление системой"
           subTitle="Пользователи системы"
           extra={[
-            <Button type="primary" onClick={showModalUser}>
+            <Button key="1" type="primary" onClick={showModalUser}>
               Добавить нового пользователя
             </Button>,
           ]}
         />
         <Card>
           <Form form={editForm} component={false}>
-            <Form.Item name="account_id" hidden></Form.Item>
+            <Form.Item name="account_id" hidden>
+              <Input type="hidden" />
+            </Form.Item>
             <Table
               // loading={isLoadingTables.users}
               className="table-striped-rows"
@@ -274,7 +277,7 @@ const SettingsPage: FC = () => {
           title="Список учреждений"
           subTitle="Учреждения дополнительного образования Белгородской области"
           extra={[
-            <Button type="primary" onClick={showModalSchool}>
+            <Button key="1" type="primary" onClick={showModalSchool}>
               Добавить учреждение
             </Button>,
           ]}
@@ -296,7 +299,7 @@ const SettingsPage: FC = () => {
           title="Список районов"
           subTitle="Районы Белгородской области, в которых проводится мониториг"
           extra={[
-            <Button type="primary" onClick={showModalArea}>
+            <Button key="1" type="primary" onClick={showModalArea}>
               Добавить район
             </Button>,
           ]}
