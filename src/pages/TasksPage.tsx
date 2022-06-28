@@ -50,14 +50,16 @@ const TasksPage: FC = () => {
   // добавление задания (изменить)
   const onCreate = async (values: {
     half_year: number;
-    year: string;
+    year: number;
     account_id: number;
   }) => {
     const { half_year, year, account_id } = values;
     form.setFieldsValue({ account_id: user.id });
     //console.log("Задание для добавления: ", values);
     try {
-      const response = await TaskService.addTask(half_year, year, account_id);
+      const response = await TaskService.addTask(+half_year, year, account_id);
+      form.resetFields();
+      message.success("Задание успешно добавлено");
     } catch (e) {
       message.error("Произошла ошибка при добавлении");
     }
