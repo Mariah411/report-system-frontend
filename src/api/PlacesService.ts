@@ -1,13 +1,13 @@
 import axios, { AxiosResponse } from "axios";
 import { $authHost } from "../http";
-// import { ReqConfig } from "../http";
+import { ReqConfig } from "../http";
 
 import { IPlace, PlaceAdmin } from "../models/IPlace";
 
 export default class PlacesService {
   static async getPlaces(): Promise<AxiosResponse<PlaceAdmin[]>> {
-    return await $authHost.get<PlaceAdmin[]>("/api/v1/entity/place");
-    // return await axios.get<PlaceAdmin[]>("/api/v1/entity/place", ReqConfig);
+    // return await $authHost.get<PlaceAdmin[]>("/api/v1/entity/place");
+    return await axios.get<PlaceAdmin[]>("/api/v1/entity/place", ReqConfig);
   }
 
   // static getSchools(places: PlaceAdmin[]): PlaceAdmin[] {
@@ -35,16 +35,4 @@ export default class PlacesService {
     );
     return AreasData;
   }
-
-  // static async getPlaces(): Promise<AxiosResponse<IPlace[]>> {
-  //   return await axios.get<IPlace[]>("/places.json");
-  // }
-
-  // static async getSchools(): Promise<IPlace[]> {
-  //   const response = await this.getPlaces();
-  //   const SchoolsData = response.data.filter(
-  //     (place) => place.place_type.id === 2
-  //   );
-  //   return SchoolsData;
-  // }
 }
