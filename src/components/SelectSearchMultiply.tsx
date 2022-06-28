@@ -16,10 +16,6 @@ const tagRender = (props: CustomTagProps) => {
       style={{ marginRight: 3 }}
     >
       <EllipsisText style={{ maxWidth: 300 }}>{label}</EllipsisText>
-
-      {/* <Typography.Text style={{ width: 100 }} ellipsis>
-        {label}
-      </Typography.Text> */}
     </Tag>
   );
 };
@@ -52,7 +48,9 @@ const SelectSearchMultiply = (props: Props) => {
       }
     >
       {props.data.map((item) => (
-        <Select.Option value={item.id}>{item.name}</Select.Option>
+        <Select.Option key={item.id} value={item.id}>
+          {item.name}
+        </Select.Option>
       ))}
     </Select>
   );

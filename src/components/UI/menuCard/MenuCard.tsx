@@ -6,11 +6,11 @@ import cl from "./menuCard.module.css";
 
 import { EnvironmentOutlined, HomeOutlined } from "@ant-design/icons";
 import EllipsisText from "../EllipsisText";
+import { IPlace } from "../../../models/IPlace";
 
 type Props = {
   user: IUser;
 };
-const colors: string[] = ["#52c41a", "#1d39c4", "#08979c"];
 
 const MenuCard: FC<Props> = (props: Props) => {
   const { user } = props;
@@ -18,21 +18,29 @@ const MenuCard: FC<Props> = (props: Props) => {
   const isUser: boolean = checkRoles(user, "USER");
   const isAdmin: boolean = checkRoles(user, "ADMIN");
 
-  // const isUser: boolean = props.user.roles.includes("user");
-
-  // const isAdmin: boolean = props.user.roles.includes("admin");
   const isPlaces: boolean = user.places.length !== 0;
   const styles = [
     { icon: <EnvironmentOutlined />, color: "#2b4acb" },
     { icon: <HomeOutlined />, color: "#d32029" },
   ];
   console.log(user.places);
+
+  const str = "Муниципальное бюджетное учреждение дополнительного образования ";
+
+  const PlacesData: IPlace[] = user.places.map((place) => ({
+    ...place,
+    name: place.name.replace(str, ""),
+  }));
+
   return (
     <>
       {isUser && isPlaces && (
         <Card className={cl.menu_card}>
           <Row>
-            {user.places.map((place) => {
+            {PlacesData.map((place) => {
+              {
+                /* {user.places.map((place) => { */
+              }
               const type_id = place.place_type.id - 1;
               return (
                 <Col key={place.id}>
