@@ -24,7 +24,6 @@ export let menuButtonsUser: IMenuButton[] = [
     key: "tasks",
     icon: ProfileOutlined,
     label: "Задания",
-    isBadge: true,
     link: RouteNames.TASKS,
   },
   {
@@ -101,7 +100,6 @@ let menuButtonsUserAdmin: IMenuButton[] = [
     key: "tasks",
     icon: ProfileOutlined,
     label: "Задания",
-    isBadge: true,
     link: RouteNames.TASKS,
   },
   {
