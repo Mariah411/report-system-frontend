@@ -12,7 +12,7 @@ import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelectror";
 import { IMenuButton } from "../../models/IMenuButton";
 import { IUser } from "../../models/IUser";
-import MenuCard from "./menuCard/MenuCard";
+import MenuCard from "../UI/menuCard/MenuCard";
 
 import { checkRoles } from "../../utils/checkRoles";
 

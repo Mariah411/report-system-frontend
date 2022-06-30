@@ -6,6 +6,6 @@ export enum RouteNames {
   USER_ID = "/user/:id",
   PROGRAMMS = "/programms",
   EVENTS = "/events",
-  SETTINGS = "/settings",
+  SETTINGS = "/settings/*",
   TASKS_ID = "tasks/:id",
 }

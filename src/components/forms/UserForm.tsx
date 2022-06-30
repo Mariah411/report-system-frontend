@@ -11,13 +11,24 @@ type Props = {
 
 const UserForm = (props: Props) => {
   const { form, places } = props;
+
+  const defaultCheckRole = ["user"];
+  const initialValues = {
+    roles: defaultCheckRole,
+  };
+
   const options = [
     { label: "Пользователь", value: "user" },
     { label: "Администратор", value: "admin" },
   ];
 
   return (
-    <Form form={form} layout="vertical" name="form_in_modal">
+    <Form
+      form={form}
+      layout="vertical"
+      name="form_in_modal"
+      initialValues={initialValues}
+    >
       <Form.Item name="fio" label="ФИО" rules={[rules.required()]}>
         <Input />
       </Form.Item>
@@ -30,7 +41,7 @@ const UserForm = (props: Props) => {
         label="Роли пользователя"
         rules={[rules.required()]}
       >
-        <Checkbox.Group options={options} defaultValue={["user"]} />
+        <Checkbox.Group options={options} />
       </Form.Item>
 
       <Form.Item name="places" label="Зависимые районы / учреждения">

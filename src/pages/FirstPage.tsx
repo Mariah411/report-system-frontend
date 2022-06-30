@@ -1,7 +1,6 @@
 import { Col, Layout, Row, Segmented, Typography } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import React, { FC } from "react";
-import MySider from "../components/UI/MySider";
 
 const FirstPage: FC = () => {
   return (

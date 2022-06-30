@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from "react";
 
 import "./App.css";
-import AppRouter from "./components/AppRouter";
+import AppRouter from "./components/routers/AppRouter";
 import { useActions } from "./hooks/useActions";
 import { IUser } from "./models/IUser";
 import { ConfigProvider, message } from "antd";
