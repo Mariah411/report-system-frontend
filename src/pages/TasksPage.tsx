@@ -17,7 +17,7 @@ import { IUser } from "../models/IUser";
 
 import { useForm } from "antd/lib/form/Form";
 import TaskService from "../api/TaskServise";
-import TaskForm from "../components/forms/TaskForm";
+import TaskForm from "../components/forms/createForms/TaskForm";
 import ModalWithForm from "../components/ModalWithForm";
 import { TaskUser } from "../models/ITask";
 import { checkRoles } from "../utils/checkRoles";

@@ -8,7 +8,7 @@ import {
   Row,
   Typography,
 } from "antd";
-import { rules } from "../../utils/rules";
+import { rules } from "../../../utils/rules";
 
 type Props = {
   form: FormInstance<any>;

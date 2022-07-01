@@ -11,15 +11,15 @@ import {
   Select,
   Typography,
 } from "antd";
-import { rules } from "../../utils/rules";
-import { IDirection } from "../../models/IDirection";
-import { IPlace } from "../../models/IPlace";
-import DirectionService from "../../api/DirectionsServise";
-import PlacesService from "../../api/PlacesService";
+import { rules } from "../../../utils/rules";
+import { IDirection } from "../../../models/IDirection";
+import { IPlace } from "../../../models/IPlace";
+import DirectionService from "../../../api/DirectionsServise";
+import PlacesService from "../../../api/PlacesService";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
-import SelectSearch from "../SelectSearch";
+import SelectSearch from "../../SelectSearch";
 import { idText } from "typescript";
-import { useTypedSelector } from "../../hooks/useTypedSelectror";
+import { useTypedSelector } from "../../../hooks/useTypedSelectror";
 
 type Props = {
   form: FormInstance<any>;

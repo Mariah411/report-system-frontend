@@ -1,9 +1,9 @@
 import { Checkbox, Form, FormInstance, Input } from "antd";
 
 import React from "react";
-import { IPlace } from "../../models/IPlace";
-import { rules } from "../../utils/rules";
-import SelectSearchMultiply from "../SelectSearchMultiply";
+import { IPlace } from "../../../models/IPlace";
+import { rules } from "../../../utils/rules";
+import SelectSearchMultiply from "../../SelectSearchMultiply";
 type Props = {
   form: FormInstance<any>;
   places: { id: number; name: string }[];

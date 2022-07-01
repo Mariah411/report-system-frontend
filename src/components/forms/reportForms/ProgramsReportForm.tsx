@@ -1,8 +1,8 @@
 import { Button, Form, FormInstance, InputNumber, Table, Tooltip } from "antd";
 import React, { useState } from "react";
-import { columns, IProgramDataType } from "../../data/tableData";
+import { columns, IProgramDataType } from "../../../data/tableData";
 import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { IProgram } from "../../models/IProgram";
+import { IProgram } from "../../../models/IProgram";
 type Props = {
   form: FormInstance<any>;
   programs: IProgramDataType[];

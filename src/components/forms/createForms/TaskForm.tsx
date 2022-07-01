@@ -7,8 +7,8 @@ import {
   Radio,
 } from "antd";
 import React from "react";
-import { formatYear } from "../../utils/date";
-import { rules } from "../../utils/rules";
+import { formatYear } from "../../../utils/date";
+import { rules } from "../../../utils/rules";
 
 type Props = {
   form: FormInstance<any>;

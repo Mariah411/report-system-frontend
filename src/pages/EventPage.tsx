@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import { FC, useEffect, useState } from "react";
-import EventForm from "../components/forms/EventForm";
+import EventForm from "../components/forms/createForms/EventForm";
 import ModalWithForm from "../components/ModalWithForm";
 import { columns, data } from "../data/tableEventsData";
 

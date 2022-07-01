@@ -15,7 +15,7 @@ import React, { FC, useEffect, useState } from "react";
 import PlacesService from "../../api/PlacesService";
 import RolesService from "../../api/RolesServise";
 import UserService from "../../api/UserServise";
-import UserForm from "../../components/forms/UserForm";
+import UserForm from "../../components/forms/createForms/UserForm";
 import ModalWithForm from "../../components/ModalWithForm";
 import SelectSearchMultiply from "../../components/SelectSearchMultiply";
 import EllipsisText from "../../components/UI/EllipsisText";

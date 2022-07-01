@@ -4,9 +4,9 @@ import { Content } from "antd/lib/layout/layout";
 import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProgramsService from "../api/ProgramsServise";
-import AreaReportForm from "../components/forms/AreaReportForm";
-import ProgramsReportForm from "../components/forms/ProgramsReportForm";
-import SchoolReportForm from "../components/forms/SchoolReportForm";
+import AreaReportForm from "../components/forms/reportForms/AreaReportForm";
+import ProgramsReportForm from "../components/forms/reportForms/ProgramsReportForm";
+import SchoolReportForm from "../components/forms/reportForms/SchoolReportForm";
 import StepsButtons from "../components/StepsButtons";
 import { IProgramDataType } from "../data/tableData";
 

@@ -7,7 +7,7 @@ import {
   Typography,
 } from "antd";
 import React from "react";
-import { rules } from "../../utils/rules";
+import { rules } from "../../../utils/rules";
 type Props = {
   form: FormInstance<any>;
 };
