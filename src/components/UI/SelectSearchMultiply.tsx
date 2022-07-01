@@ -1,6 +1,6 @@
 import { FormInstance, Select, Tag, Typography } from "antd";
 import type { CustomTagProps } from "rc-select/lib/BaseSelect";
-import EllipsisText from "./UI/EllipsisText";
+import EllipsisText from "./EllipsisText";
 
 const onSearch = (value: string) => {
   console.log("search:", value);
@@ -25,6 +25,7 @@ type Props = {
   form: FormInstance<any>;
   selectedValues: number[];
   fieldName: string;
+  placeholder: string;
 };
 const SelectSearchMultiply = (props: Props) => {
   const onChange = (values: number[]) => {
@@ -35,7 +36,7 @@ const SelectSearchMultiply = (props: Props) => {
     <Select
       mode="multiple"
       showSearch
-      placeholder="Выберите район/учреждение"
+      placeholder={props.placeholder}
       optionFilterProp="children"
       tagRender={tagRender}
       onChange={onChange}

@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import {
   Checkbox,
   Form,
@@ -8,18 +6,16 @@ import {
   InputNumber,
   Radio,
   Row,
-  Select,
   Typography,
 } from "antd";
-import { rules } from "../../../utils/rules";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { useEffect, useState } from "react";
+import DirectionService from "../../../api/DirectionsServise";
+import { useTypedSelector } from "../../../hooks/useTypedSelectror";
 import { IDirection } from "../../../models/IDirection";
 import { IPlace } from "../../../models/IPlace";
-import DirectionService from "../../../api/DirectionsServise";
-import PlacesService from "../../../api/PlacesService";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
-import SelectSearch from "../../SelectSearch";
-import { idText } from "typescript";
-import { useTypedSelector } from "../../../hooks/useTypedSelectror";
+import { rules } from "../../../utils/rules";
+import SelectSearch from "../../UI/SelectSearch";
 
 type Props = {
   form: FormInstance<any>;

@@ -11,14 +11,14 @@ import {
 } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import Table, { ColumnsType } from "antd/lib/table";
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import PlacesService from "../../api/PlacesService";
 import RolesService from "../../api/RolesServise";
 import UserService from "../../api/UserServise";
 import UserForm from "../../components/forms/createForms/UserForm";
 import ModalWithForm from "../../components/ModalWithForm";
-import SelectSearchMultiply from "../../components/SelectSearchMultiply";
 import EllipsisText from "../../components/UI/EllipsisText";
+import SelectSearchMultiply from "../../components/UI/SelectSearchMultiply";
 import { IPlace, PlaceAdmin } from "../../models/IPlace";
 import { IRole } from "../../models/IRole";
 import { IUser } from "../../models/IUser";
@@ -123,6 +123,7 @@ const UserSettings: FC = () => {
               data={rolesData}
               form={editForm}
               selectedValues={recordRoles}
+              placeholder="Выберите роль"
             />
           </Form.Item>
         ) : (
@@ -147,6 +148,7 @@ const UserSettings: FC = () => {
               data={placesData}
               form={editForm}
               selectedValues={recordPlaces}
+              placeholder="Выберите районы/учреждения"
             />
           </Form.Item>
         ) : (

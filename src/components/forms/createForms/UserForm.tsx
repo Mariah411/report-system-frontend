@@ -1,9 +1,7 @@
 import { Checkbox, Form, FormInstance, Input } from "antd";
 
-import React from "react";
-import { IPlace } from "../../../models/IPlace";
 import { rules } from "../../../utils/rules";
-import SelectSearchMultiply from "../../SelectSearchMultiply";
+import SelectSearchMultiply from "../../UI/SelectSearchMultiply";
 type Props = {
   form: FormInstance<any>;
   places: { id: number; name: string }[];
@@ -50,6 +48,7 @@ const UserForm = (props: Props) => {
           data={places}
           form={form}
           selectedValues={[]}
+          placeholder="Выберите район / учреждение"
         />
       </Form.Item>
     </Form>

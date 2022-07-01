@@ -1,11 +1,10 @@
 import { DatePicker, Form, FormInstance, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import React, { FC, useEffect, useState } from "react";
-import PlacesService from "../../../api/PlacesService";
+import { FC } from "react";
 import { useTypedSelector } from "../../../hooks/useTypedSelectror";
 import { IPlace } from "../../../models/IPlace";
 import { rules } from "../../../utils/rules";
-import SelectSearch from "../../SelectSearch";
+import SelectSearch from "../../UI/SelectSearch";
 type Props = {
   form: FormInstance<any>;
 };
