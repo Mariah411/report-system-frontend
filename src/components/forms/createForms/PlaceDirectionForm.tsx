@@ -1,13 +1,13 @@
 import { Form, FormInstance, Input } from "antd";
 import React from "react";
-import { rules } from "../../utils/rules";
+import { rules } from "../../../utils/rules";
 
 type Props = {
   form: FormInstance<any>;
   label: string;
 };
 
-const PlaceForm = (props: Props) => {
+const PlaceDirectionForm = (props: Props) => {
   const { form, label } = props;
   return (
     <Form form={form} layout="vertical" name="form_in_modal">
@@ -18,4 +18,4 @@ const PlaceForm = (props: Props) => {
   );
 };
 
-export default PlaceForm;
+export default PlaceDirectionForm;

@@ -1,8 +1,8 @@
 import { Button, Card, Form, Layout, PageHeader, Table } from "antd";
 import { Content } from "antd/lib/layout/layout";
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import PlacesService from "../../api/PlacesService";
-import PlaceForm from "../../components/forms/PlaceForm";
+import PlaceDirectionForm from "../../components/forms/createForms/PlaceDirectionForm";
 import ModalWithForm from "../../components/ModalWithForm";
 import { colsArea } from "../../data/placesTableData";
 import { PlaceAdmin } from "../../models/IPlace";
@@ -69,7 +69,7 @@ const AreaSettings: FC = () => {
           setVisible={setAreaModVisible}
           onCreate={onCreateArea}
         >
-          <PlaceForm form={formArea} label="Название района" />
+          <PlaceDirectionForm form={formArea} label="Название района" />
         </ModalWithForm>
       </Content>
     </Layout>
