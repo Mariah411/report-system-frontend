@@ -11,6 +11,8 @@ import axios, { AxiosError } from "axios";
 import { join } from "path";
 
 import jwt_decode from "jwt-decode";
+import TaskService from "../../../api/TaskServise";
+import { message } from "antd";
 
 //action-creator (создание действий)
 //с указанием какие данные принимаает, что возвращает
@@ -85,6 +87,27 @@ export const AuthActionCreators = {
       dispatch(AuthActionCreators.setAuth(false));
     } catch (e) {
       dispatch(AuthActionCreators.setError("Произошла ошибка при выходе"));
+    }
+  },
+
+  checkAuth: () => async (dispatch: AppDispatch) => {
+    if (localStorage.getItem("token")) {
+      const response = TaskService.getTasks()
+        .then(() => {
+          const user = jwt_decode(localStorage.getItem("token") || "");
+          dispatch(AuthActionCreators.setUser(user as IUser));
+          dispatch(AuthActionCreators.setAuth(true));
+          return true;
+        })
+        .catch((err) => {
+          dispatch(
+            AuthActionCreators.setError(
+              "Время вашей сессии истекло. Пожалуйста, авторизуйтесь повторно"
+            )
+          );
+          localStorage.removeItem("token");
+          return false;
+        });
     }
   },
 };
