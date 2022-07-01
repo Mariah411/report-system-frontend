@@ -5,6 +5,7 @@ import {
   FormInstance,
   Input,
   Layout,
+  message,
   PageHeader,
   Row,
   Tag,
@@ -30,14 +31,17 @@ const UserSettings: FC = () => {
 
   const [isLoadingTable, setIsLoadingTable] = useState(false);
 
-  useEffect(() => {
+  const getUsersData = async () => {
+    const response = await UserService.getAllUsers();
+    setUsersData(response.data);
+    setIsLoadingTable(false);
+  };
+  const LoadingData = () => {
     setIsLoadingTable(true);
-    const getUsersData = async () => {
-      const response = await UserService.getAllUsers();
-      setUsersData(response.data);
-      setIsLoadingTable(false);
-    };
+    getUsersData();
+  };
 
+  useEffect(() => {
     const getPlacesData = async () => {
       const response = await PlacesService.getPlaces();
       setPlacesData(response.data);
@@ -48,7 +52,8 @@ const UserSettings: FC = () => {
       setRolesData(response.data);
     };
 
-    getUsersData();
+    LoadingData();
+
     getPlacesData();
     getRoles();
   }, []);
@@ -205,9 +210,36 @@ const UserSettings: FC = () => {
   };
 
   // добавление пользователя
-  const onCreateUser = (values: any) => {
-    console.log("Созданный пользователь: ", values);
-    setUserModVisible(false);
+  const onCreateUser = async (values: {
+    FIO: string;
+    mail: string;
+    roles: string[];
+    places: number[];
+  }) => {
+    const { FIO, mail, roles, places } = values;
+
+    const password = "user";
+
+    const response = await UserService.addUserWithRolesPlaces(
+      FIO,
+      mail,
+      password,
+      roles,
+      places
+    )
+      .then(() => {
+        message.success("Успешно");
+        setUserModVisible(false);
+        LoadingData();
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error("Ошибка");
+        setUserModVisible(false);
+      });
+
+    //console.log(FIO, mail, roles, places);
+    //setUserModVisible(false);
   };
   // форма
   const [formUser] = Form.useForm();

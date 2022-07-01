@@ -10,14 +10,14 @@ type Props = {
 const UserForm = (props: Props) => {
   const { form, places } = props;
 
-  const defaultCheckRole = ["user"];
+  const defaultCheckRole = ["2"];
   const initialValues = {
     roles: defaultCheckRole,
   };
 
   const options = [
-    { label: "Пользователь", value: "user" },
-    { label: "Администратор", value: "admin" },
+    { label: "Пользователь", value: "2" },
+    { label: "Администратор", value: "1" },
   ];
 
   return (
@@ -27,11 +27,15 @@ const UserForm = (props: Props) => {
       name="form_in_modal"
       initialValues={initialValues}
     >
-      <Form.Item name="fio" label="ФИО" rules={[rules.required()]}>
+      <Form.Item name="FIO" label="ФИО" rules={[rules.required()]}>
         <Input />
       </Form.Item>
-      <Form.Item name="email" label="email" rules={[rules.required()]}>
-        <Input />
+      <Form.Item
+        name="mail"
+        label="Электронная почта"
+        rules={[rules.required(), { type: "email" }]}
+      >
+        <Input type="email" />
       </Form.Item>
 
       <Form.Item

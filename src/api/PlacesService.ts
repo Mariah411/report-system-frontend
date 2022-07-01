@@ -53,4 +53,15 @@ export default class PlacesService {
   static async addArea(name: string): Promise<AxiosResponse<number>> {
     return await this.addPlace(name, 1);
   }
+
+  static async setControl(
+    account_id: number,
+    place_id: number
+  ): Promise<AxiosResponse<number>> {
+    return await axios.post<number>(
+      "/api/v1/entity/control",
+      { account_id: account_id, place_id: place_id },
+      ReqConfig()
+    );
+  }
 }
