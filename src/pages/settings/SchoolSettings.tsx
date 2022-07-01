@@ -1,4 +1,4 @@
-import { Button, Card, Form, Layout, PageHeader, Table } from "antd";
+import { Button, Card, Form, Layout, message, PageHeader, Table } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import { FC, useEffect, useState } from "react";
 import PlacesService from "../../api/PlacesService";
@@ -11,16 +11,18 @@ const SchoolSettings: FC = () => {
   const [schoolsData, setSchoolsData] = useState<PlaceAdmin[]>([]);
   const [isLoadingTable, setIsLoadingTable] = useState(false);
 
-  useEffect(() => {
-    setIsLoadingTable(true);
-    const getSchoolsData = async () => {
-      const response = await PlacesService.getSchools();
-      setSchoolsData(response);
-      setIsLoadingTable(false);
-    };
+  const getSchoolsData = async () => {
+    const response = await PlacesService.getSchools();
+    setSchoolsData(response);
+    setIsLoadingTable(false);
+  };
 
+  const LoadingData = () => {
+    setIsLoadingTable(true);
     getSchoolsData();
-  }, []);
+  };
+
+  useEffect(() => LoadingData(), []);
 
   // модальное окно
 
@@ -30,9 +32,19 @@ const SchoolSettings: FC = () => {
   };
 
   // добавление учреждения
-  const onCreateSchool = (values: any) => {
-    console.log("Учреждение: ", values);
-    setSchoolModVisible(false);
+  const onCreateSchool = async (values: any) => {
+    const { name } = values;
+
+    const response = await PlacesService.addSchool(name)
+      .then(() => {
+        message.success("Успешно добавлено");
+        setSchoolModVisible(false);
+        LoadingData();
+      })
+      .catch((err) => {
+        message.error("Произошла ошибка при добавлении учреждения");
+        setSchoolModVisible(false);
+      });
   };
 
   const [formSchool] = Form.useForm();

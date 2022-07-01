@@ -1,4 +1,4 @@
-import { Button, Card, Form, Layout, PageHeader, Table } from "antd";
+import { Button, Card, Form, Layout, message, PageHeader, Table } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import React, { FC, useEffect, useState } from "react";
 import DirectionService from "../../api/DirectionsServise";
@@ -11,15 +11,18 @@ const DirectionSettings: FC = () => {
   const [directionsData, setDirectionsData] = useState<IDirection[]>([]);
   const [isLoadingTable, setIsLoadingTable] = useState(false);
 
-  useEffect(() => {
+  const getDirectionsData = async () => {
+    const responce = await DirectionService.getDirectionsAdmin();
+    setDirectionsData(responce.data);
+    setIsLoadingTable(false);
+  };
+
+  const LoadingData = () => {
     setIsLoadingTable(true);
-    const getDirectionsData = async () => {
-      const responce = await DirectionService.getDirectionsAdmin();
-      setDirectionsData(responce.data);
-      setIsLoadingTable(false);
-    };
     getDirectionsData();
-  }, []);
+  };
+
+  useEffect(() => LoadingData(), []);
 
   //модальное окно
   const [DirModVisible, setDirModVisible] = useState(false);
@@ -28,13 +31,23 @@ const DirectionSettings: FC = () => {
     setDirModVisible(true);
   };
 
-  // добавление направления
-  const onCreateDirection = (values: any) => {
-    console.log("Направление: ", values);
-    setDirModVisible(false);
-  };
-
   const [formDirection] = Form.useForm();
+
+  // добавление направления
+  const onCreateDirection = async (values: { name: string }) => {
+    const { name } = values;
+
+    const response = await DirectionService.addDirection(name)
+      .then(() => {
+        message.success("Успешно добавлено");
+        setDirModVisible(false);
+        LoadingData();
+      })
+      .catch((err) => {
+        message.error("Произошла ошибка при добавлении направления");
+        setDirModVisible(false);
+      });
+  };
 
   return (
     <Layout className="site-layout">

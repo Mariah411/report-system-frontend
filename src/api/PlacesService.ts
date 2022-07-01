@@ -35,4 +35,22 @@ export default class PlacesService {
     );
     return AreasData;
   }
+
+  static async addPlace(
+    name: string,
+    place_type_id: number
+  ): Promise<AxiosResponse<number>> {
+    return await axios.post<number>(
+      "/api/v1/entity/place",
+      { name: name, place_type_id: place_type_id },
+      ReqConfig()
+    );
+  }
+
+  static async addSchool(name: string): Promise<AxiosResponse<number>> {
+    return await this.addPlace(name, 2);
+  }
+  static async addArea(name: string): Promise<AxiosResponse<number>> {
+    return await this.addPlace(name, 1);
+  }
 }

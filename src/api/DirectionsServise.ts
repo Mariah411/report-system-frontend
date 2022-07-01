@@ -12,4 +12,12 @@ export default class DirectionService {
   static async getDirections(): Promise<AxiosResponse<IDirection[]>> {
     return await axios.get<IDirection[]>("/api/v1/entity/direction");
   }
+
+  static async addDirection(name: string): Promise<AxiosResponse<number>> {
+    return await axios.post<number>(
+      "/api/v1/entity/direction",
+      { name: name },
+      ReqConfig()
+    );
+  }
 }

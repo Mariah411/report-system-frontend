@@ -1,4 +1,4 @@
-import { Button, Card, Form, Layout, PageHeader, Table } from "antd";
+import { Button, Card, Form, Layout, message, PageHeader, Table } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import { FC, useEffect, useState } from "react";
 import PlacesService from "../../api/PlacesService";
@@ -11,16 +11,18 @@ const AreaSettings: FC = () => {
   const [areasData, setAreasData] = useState<PlaceAdmin[]>([]);
   const [isLoadingTable, setIsLoadingTable] = useState(false);
 
-  useEffect(() => {
-    setIsLoadingTable(true);
-    const getAreaData = async () => {
-      const response = await PlacesService.getAreas();
-      setAreasData(response);
-      setIsLoadingTable(false);
-    };
+  const getAreaData = async () => {
+    const response = await PlacesService.getAreas();
+    setAreasData(response);
+    setIsLoadingTable(false);
+  };
 
+  const LoadingData = () => {
+    setIsLoadingTable(true);
     getAreaData();
-  }, []);
+  };
+
+  useEffect(() => LoadingData(), []);
 
   //модальное окно
   const [AreaModVisible, setAreaModVisible] = useState(false);
@@ -30,9 +32,19 @@ const AreaSettings: FC = () => {
   };
 
   // добавление района
-  const onCreateArea = (values: any) => {
-    console.log("Район: ", values);
-    setAreaModVisible(false);
+  const onCreateArea = async (values: { name: string }) => {
+    const { name } = values;
+
+    const response = await PlacesService.addArea(name)
+      .then(() => {
+        message.success("Успешно добавлено");
+        setAreaModVisible(false);
+        LoadingData();
+      })
+      .catch((err) => {
+        message.error("Произошла ошибка при добавлении района");
+        setAreaModVisible(false);
+      });
   };
 
   const [formArea] = Form.useForm();
