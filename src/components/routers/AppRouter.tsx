@@ -12,7 +12,7 @@ import MySider from "../navigation/MySider";
 
 const AppRouter = () => {
   // получение флага авторизации
-  const isAuth = useTypedSelector((state) => state.auth.isAuth);
+  const { isAuth, isLoading } = useTypedSelector((state) => state.auth);
 
   return isAuth ? (
     <>
@@ -26,9 +26,11 @@ const AppRouter = () => {
               key={route.path}
             />
           ))}
+          <Route
+            path="*"
+            element={<Navigate to={RouteNames.FIRST} replace />}
+          />
         </Route>
-
-        <Route path="*" element={<Navigate to={RouteNames.FIRST} replace />} />
       </Routes>
     </>
   ) : (
