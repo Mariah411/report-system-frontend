@@ -1,3 +1,4 @@
+import { adminRouteNames } from "./adminRouteNames";
 import { settingsRouteNames } from "./settingsRouteNames";
 import EventPage from "../pages/EventPage";
 import FirstPage from "../pages/FirstPage";
@@ -13,6 +14,11 @@ import UserSettings from "../pages/settings/UserSettings";
 import SchoolSettings from "../pages/settings/SchoolSettings";
 import AreaSettings from "../pages/settings/AreaSettings";
 import DirectionSettings from "../pages/settings/DirectionSettings";
+import MyEventsPage from "../pages/MyEventsPage";
+import AllEventsPage from "../pages/AllEventsPage";
+import AdminTasksPage from "../pages/AdminTasksPage";
+import MyTasksPage from "../pages/MyTasksPage";
+import { userRouteNames } from "./userRouteNames";
 
 // интерфейс маршрута
 export interface IRoute {
@@ -30,12 +36,28 @@ export const publicRoutes: IRoute[] = [
 //приватные маршруты
 export const privateRoutes: IRoute[] = [
   { path: RouteNames.FIRST, element: FirstPage, index: true },
-  { path: RouteNames.TASKS, element: TasksPage, index: false },
-  { path: RouteNames.SETTINGS, element: SettingsPage, index: false },
-  { path: RouteNames.EVENTS, element: EventPage, index: false },
-  { path: RouteNames.PROGRAMMS, element: ProgrammsPage, index: false },
   { path: RouteNames.TASKS_ID, element: ReportPage, index: false },
+
+  { path: adminRouteNames.All_TASKS, element: AdminTasksPage, index: false },
+  { path: adminRouteNames.SETTINGS, element: SettingsPage, index: false },
+  { path: adminRouteNames.ALL_EVENTS, element: AllEventsPage, index: false },
+
+  { path: userRouteNames.MY_TASKS, element: MyTasksPage, index: false },
+  { path: userRouteNames.MY_EVENTS, element: MyEventsPage, index: false },
+  { path: userRouteNames.PROGRAMMS, element: ProgrammsPage, index: false },
 ];
+
+// export const userRoutes: IRoute[] = [
+//   { path: userRouteNames.MY_TASKS, element: MyTasksPage, index: false },
+//   { path: userRouteNames.MY_EVENTS, element: MyEventsPage, index: false },
+//   { path: userRouteNames.PROGRAMMS, element: ProgrammsPage, index: false },
+// ];
+
+// export const adminRoutes: IRoute[] = [
+//   { path: adminRouteNames.All_TASKS, element: AdminTasksPage, index: false },
+//   { path: adminRouteNames.SETTINGS, element: SettingsPage, index: false },
+//   { path: adminRouteNames.ALL_EVENTS, element: AllEventsPage, index: false },
+// ];
 
 export const settingsRoutes: IRoute[] = [
   { path: settingsRouteNames.USERS, element: UserSettings, index: false },

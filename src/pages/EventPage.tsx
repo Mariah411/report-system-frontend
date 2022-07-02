@@ -15,15 +15,29 @@ import EventForm from "../components/forms/createForms/EventForm";
 import ModalWithForm from "../components/ModalWithForm";
 import { columns, data } from "../data/tableEventsData";
 
-const EventPage: FC = () => {
+type Props = {
+  title: string;
+  isButton: boolean;
+  // ServiseGetData: () => void;
+};
+
+const EventPage: FC<Props> = (props: Props) => {
+  // const { title, isButton, ServiseGetData } = props;
+  const { title, isButton } = props;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [tableData, setTableData] = useState<any>([]);
 
   useEffect(() => {
     setIsLoading(true);
-
+    const getData = async () => {
+      const data: any[] = [];
+      //ServiseGetData()
+      setTableData(data);
+      setIsLoading(false);
+    };
+    getData();
     // получение мероприятий добавить
-    setIsLoading(false);
   }, []);
 
   const showModal = () => {
@@ -42,11 +56,13 @@ const EventPage: FC = () => {
       <Content className="content content_m-20">
         <PageHeader
           ghost={false}
-          title="Мероприятия"
+          title={title}
           extra={[
-            <Button key="1" type="primary" onClick={showModal}>
-              Добавить мероприятие
-            </Button>,
+            isButton && (
+              <Button key="1" type="primary" onClick={showModal}>
+                Добавить мероприятие
+              </Button>
+            ),
           ]}
         />
         <Card>
@@ -55,7 +71,7 @@ const EventPage: FC = () => {
             className="table-striped-rows"
             columns={columns}
             size="middle"
-            dataSource={data}
+            dataSource={tableData}
           />
         </Card>
 

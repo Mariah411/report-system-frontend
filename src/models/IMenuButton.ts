@@ -1,3 +1,5 @@
+import { userRouteNames } from "./../router/userRouteNames";
+import { adminRouteNames } from "./../router/adminRouteNames";
 import { RouteNames } from "../router/routeNames";
 
 export interface IMenuButton {
@@ -5,5 +7,5 @@ export interface IMenuButton {
   key: string;
   icon: any;
   label: string;
-  link?: RouteNames;
+  link?: RouteNames | adminRouteNames | userRouteNames;
 }

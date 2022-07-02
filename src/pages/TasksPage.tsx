@@ -21,15 +21,22 @@ import TaskForm from "../components/forms/createForms/TaskForm";
 import ModalWithForm from "../components/ModalWithForm";
 import { TaskUser } from "../models/ITask";
 import { checkRoles } from "../utils/checkRoles";
+import { title } from "process";
 
 /*страница заданий*/
-
-const TasksPage: FC = () => {
-  const [typeTask, setTypeTask] = useState<string | number>("Активные");
+type Props = {
+  title: string;
+  isButton: boolean;
+  SegmentOptions: string[];
+  buttonsText: string[];
+};
+const TasksPage: FC<Props> = (props: Props) => {
+  const { title, isButton, SegmentOptions, buttonsText } = props;
+  const [typeTask, setTypeTask] = useState<string | number>(SegmentOptions[0]);
 
   const user: IUser = useTypedSelector((state) => state.auth.user);
 
-  const isAdmin: boolean = checkRoles(user, "ADMIN");
+  //const isAdmin: boolean = checkRoles(user, "ADMIN");
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   //const [tasks, setTasks] = useState();
@@ -48,6 +55,7 @@ const TasksPage: FC = () => {
     setIsLoading(true);
 
     const getTasks = async () => {
+      // изменить получение заданий
       const response = await TaskService.getTasks();
       const active = response.data.filter((task) => task.done === false);
       const done = response.data.filter((task) => task.done === true);
@@ -62,8 +70,6 @@ const TasksPage: FC = () => {
   // добавление задания (изменить)
   const onCreate = async (values: { half_year: number; year: number }) => {
     const { half_year, year } = values;
-    // form.setFieldsValue({ account_id: user.id });
-    //console.log(user.id);
     try {
       const response = await TaskService.addTask(+half_year, year, user.id);
       form.resetFields();
@@ -82,10 +88,10 @@ const TasksPage: FC = () => {
           <Card>
             <PageHeader
               onBack={() => null}
-              title="Задания"
+              title={title}
               subTitle="Активные задания, архив отчетов"
               extra={
-                isAdmin && [
+                isButton && [
                   <Button key="1" type="primary" onClick={showModal}>
                     Добавить задание
                   </Button>,
@@ -95,7 +101,7 @@ const TasksPage: FC = () => {
             <div className="cards-container">
               <Segmented
                 className="my_segment"
-                options={["Активные", "Мои ответы"]}
+                options={SegmentOptions}
                 value={typeTask}
                 onChange={(e) => setTypeTask(e)}
               />
@@ -110,16 +116,16 @@ const TasksPage: FC = () => {
             /> */}
 
             <Spin spinning={isLoading}>
-              {typeTask === "Активные" ? (
+              {typeTask === SegmentOptions[0] ? (
                 <CardList
                   data={activeTasks}
-                  buttonText="Добавить отчет"
+                  buttonText={buttonsText[0]}
                   typeTask={typeTask.toString()}
                 />
               ) : (
                 <CardList
                   data={doneTasks}
-                  buttonText="Посмотреть отчет"
+                  buttonText={buttonsText[1]}
                   typeTask={typeTask.toString()}
                 />
               )}
@@ -127,15 +133,17 @@ const TasksPage: FC = () => {
           </div>
         </div>
 
-        <ModalWithForm
-          title="Новое задание"
-          isVisible={isModalVisible}
-          form={form}
-          setVisible={setIsModalVisible}
-          onCreate={onCreate}
-        >
-          <TaskForm form={form} />
-        </ModalWithForm>
+        {isButton && (
+          <ModalWithForm
+            title="Новое задание"
+            isVisible={isModalVisible}
+            form={form}
+            setVisible={setIsModalVisible}
+            onCreate={onCreate}
+          >
+            <TaskForm form={form} />
+          </ModalWithForm>
+        )}
       </Content>
     </Layout>
   );
