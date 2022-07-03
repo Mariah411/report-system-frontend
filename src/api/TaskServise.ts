@@ -1,3 +1,4 @@
+import { ITaskPlaces } from "./../models/ITaskPlaces";
 import { ITask, TaskUser } from "./../models/ITask";
 import axios, { AxiosResponse } from "axios";
 import { $authHost, ReqConfig } from "../http";
@@ -40,5 +41,11 @@ export default class TaskService {
       {},
       ReqConfig()
     );
+  }
+
+  static async getReportPlaces(
+    id: string
+  ): Promise<AxiosResponse<ITaskPlaces[]>> {
+    return await axios.get(`/api/v1/task/${id}`, ReqConfig());
   }
 }
