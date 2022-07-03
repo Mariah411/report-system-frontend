@@ -1,11 +1,11 @@
 import { Button, Card, Form, Layout, message, PageHeader, Table } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import React, { FC, useEffect, useState } from "react";
-import DirectionService from "../../api/DirectionsServise";
-import PlaceDirectionForm from "../../components/forms/createForms/PlaceDirectionForm";
-import ModalWithForm from "../../components/ModalWithForm";
-import { directionCols } from "../../data/directionTableData";
-import { IDirection } from "../../models/IDirection";
+import DirectionService from "../../../api/DirectionsServise";
+import PlaceDirectionForm from "../../../components/forms/createForms/PlaceDirectionForm";
+import ModalWithForm from "../../../components/ModalWithForm";
+import { directionCols } from "../../../data/directionTableData";
+import { IDirection } from "../../../models/IDirection";
 
 const DirectionSettings: FC = () => {
   const [directionsData, setDirectionsData] = useState<IDirection[]>([]);

@@ -2,10 +2,10 @@ import { Button, Card, Form, Layout, PageHeader, Popconfirm } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import Table from "antd/lib/table";
 import React, { FC, useEffect, useState } from "react";
-import ProgramsService from "../api/ProgramsServise";
-import ProgramForm from "../components/forms/createForms/ProgramForm";
-import ModalWithForm from "../components/ModalWithForm";
-import { columns, IProgramDataType } from "../data/tableData";
+import ProgramsService from "../../api/ProgramsServise";
+import ProgramForm from "../../components/forms/createForms/ProgramForm";
+import ModalWithForm from "../../components/ModalWithForm";
+import { columns, IProgramDataType } from "../../data/tableData";
 
 const ProgrammsPage: FC = () => {
   const [programmsData, setProgrammsData] = useState<IProgramDataType[]>([]);

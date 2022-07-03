@@ -4,10 +4,26 @@ import { Button, Card, List } from "antd";
 import { cardsData1, cardsData2, MyData } from "../data/cardsData";
 import { Link } from "react-router-dom";
 import { TaskUser } from "../models/ITask";
+import { adminRouteNames } from "../router/adminRouteNames";
+import { userRouteNames } from "../router/userRouteNames";
 
-type Props = { data: TaskUser[]; buttonText: string; typeTask: string };
+type Props = {
+  data: TaskUser[];
+  buttonText: string;
+  typeTask: string;
+  link: adminRouteNames | userRouteNames | string;
+};
 
 const CardList = (props: Props) => {
+  useEffect(() => {
+    props.data.forEach((item) =>
+      localStorage.setItem(
+        `${item.id}`,
+        `Отчет за ${item.year} год, ${item.half_year}-e полугодие`
+      )
+    );
+  }, []);
+  let temp_link = props.link.replace(":id", "");
   return (
     <List
       itemLayout="vertical"
@@ -18,7 +34,7 @@ const CardList = (props: Props) => {
           <Card
             title={`Отчет за ${item.year} год, ${item.half_year}-e полугодие`}
             extra={
-              <Link to={`/tasks/${item.id}`}>
+              <Link to={`${temp_link}${item.id}`}>
                 <Button type="primary">{props.buttonText}</Button>
               </Link>
             }

@@ -1,6 +1,7 @@
-import { TaskUser } from "./../models/ITask";
+import { ITask, TaskUser } from "./../models/ITask";
 import axios, { AxiosResponse } from "axios";
 import { $authHost, ReqConfig } from "../http";
+import { ITableData } from "../models/ITableData";
 
 export default class TaskService {
   static async getTasks(): Promise<AxiosResponse<TaskUser[]>> {
@@ -26,6 +27,17 @@ export default class TaskService {
         year: year,
         account_id: account_id,
       },
+      ReqConfig()
+    );
+  }
+
+  static async getReport(
+    id: string,
+    type: number
+  ): Promise<AxiosResponse<ITableData>> {
+    return await axios.post<ITableData>(
+      `/api/v1/task/${id}/type/${type}`,
+      {},
       ReqConfig()
     );
   }

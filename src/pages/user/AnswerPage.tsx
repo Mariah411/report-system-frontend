@@ -3,14 +3,14 @@ import { useForm } from "antd/lib/form/Form";
 import { Content } from "antd/lib/layout/layout";
 import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ProgramsService from "../api/ProgramsServise";
-import AreaReportForm from "../components/forms/reportForms/AreaReportForm";
-import ProgramsReportForm from "../components/forms/reportForms/ProgramsReportForm";
-import SchoolReportForm from "../components/forms/reportForms/SchoolReportForm";
-import StepsButtons from "../components/StepsButtons";
-import { IProgramDataType } from "../data/tableData";
+import ProgramsService from "../../api/ProgramsServise";
+import AreaReportForm from "../../components/forms/reportForms/AreaReportForm";
+import ProgramsReportForm from "../../components/forms/reportForms/ProgramsReportForm";
+import SchoolReportForm from "../../components/forms/reportForms/SchoolReportForm";
+import StepsButtons from "../../components/StepsButtons";
+import { IProgramDataType } from "../../data/tableData";
 
-const ReportPage: FC = () => {
+const AnswerPage: FC = () => {
   const { id } = useParams();
 
   const [programmsData, setProgrammsData] = useState<IProgramDataType[]>([]);
@@ -26,6 +26,9 @@ const ReportPage: FC = () => {
     getProgrammsData();
   }, []);
 
+  const sendData = () => {
+    message.success("Отчет отправлен!");
+  };
   const [formArea] = useForm();
   const [formSchool] = useForm();
   const [formPrograms] = useForm();
@@ -79,15 +82,16 @@ const ReportPage: FC = () => {
 
           {steps[current].content}
           <StepsButtons
+            Click={sendData}
             steps={steps}
             current={current}
             setCurrent={setCurrent}
           />
         </div>
       </Content>
-      <div>ReportPage {id}</div>
+      <div>AnswerPage {id}</div>
     </Layout>
   );
 };
 
-export default ReportPage;
+export default AnswerPage;

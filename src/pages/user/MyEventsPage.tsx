@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import EventPage from "./EventPage";
+import EventPage from "../EventPage";
 
 const MyEventsPage: FC = () => {
   //   const ServisegetData: () => void ;

@@ -1,11 +1,11 @@
 import { Button, Card, Form, Layout, message, PageHeader, Table } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import { FC, useEffect, useState } from "react";
-import PlacesService from "../../api/PlacesService";
-import PlaceDirectionForm from "../../components/forms/createForms/PlaceDirectionForm";
-import ModalWithForm from "../../components/ModalWithForm";
-import { colsSchool } from "../../data/placesTableData";
-import { PlaceAdmin } from "../../models/IPlace";
+import PlacesService from "../../../api/PlacesService";
+import PlaceDirectionForm from "../../../components/forms/createForms/PlaceDirectionForm";
+import ModalWithForm from "../../../components/ModalWithForm";
+import { colsSchool } from "../../../data/placesTableData";
+import { PlaceAdmin } from "../../../models/IPlace";
 
 const SchoolSettings: FC = () => {
   const [schoolsData, setSchoolsData] = useState<PlaceAdmin[]>([]);

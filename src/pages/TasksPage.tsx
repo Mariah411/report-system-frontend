@@ -22,6 +22,8 @@ import ModalWithForm from "../components/ModalWithForm";
 import { TaskUser } from "../models/ITask";
 import { checkRoles } from "../utils/checkRoles";
 import { title } from "process";
+import { adminRouteNames } from "../router/adminRouteNames";
+import { userRouteNames } from "../router/userRouteNames";
 
 /*страница заданий*/
 type Props = {
@@ -29,9 +31,10 @@ type Props = {
   isButton: boolean;
   SegmentOptions: string[];
   buttonsText: string[];
+  links: adminRouteNames[] | userRouteNames[] | string[];
 };
 const TasksPage: FC<Props> = (props: Props) => {
-  const { title, isButton, SegmentOptions, buttonsText } = props;
+  const { title, isButton, SegmentOptions, buttonsText, links } = props;
   const [typeTask, setTypeTask] = useState<string | number>(SegmentOptions[0]);
 
   const user: IUser = useTypedSelector((state) => state.auth.user);
@@ -104,6 +107,7 @@ const TasksPage: FC<Props> = (props: Props) => {
                 options={SegmentOptions}
                 value={typeTask}
                 onChange={(e) => setTypeTask(e)}
+                size="large"
               />
             </div>
           </Card>
@@ -118,12 +122,14 @@ const TasksPage: FC<Props> = (props: Props) => {
             <Spin spinning={isLoading}>
               {typeTask === SegmentOptions[0] ? (
                 <CardList
+                  link={links[0]}
                   data={activeTasks}
                   buttonText={buttonsText[0]}
                   typeTask={typeTask.toString()}
                 />
               ) : (
                 <CardList
+                  link={links[1]}
                   data={doneTasks}
                   buttonText={buttonsText[1]}
                   typeTask={typeTask.toString()}

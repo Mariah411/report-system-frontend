@@ -5,10 +5,11 @@ type Props = {
   steps: any[];
   current: number;
   setCurrent: (arg: number) => void;
+  Click?: () => void;
 };
 
 const StepsButtons = (props: Props) => {
-  const { steps, current, setCurrent } = props;
+  const { steps, current, setCurrent, Click } = props;
 
   const next = () => {
     setCurrent(current + 1);
@@ -17,6 +18,7 @@ const StepsButtons = (props: Props) => {
   const prev = () => {
     setCurrent(current - 1);
   };
+
   return (
     <Card className="steps-action">
       {current < steps.length - 1 && (
@@ -25,10 +27,7 @@ const StepsButtons = (props: Props) => {
         </Button>
       )}
       {current === steps.length - 1 && (
-        <Button
-          type="primary"
-          onClick={() => message.success("Отчет добавлен!")}
-        >
+        <Button type="primary" onClick={Click}>
           Готово
         </Button>
       )}

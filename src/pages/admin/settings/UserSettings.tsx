@@ -13,16 +13,16 @@ import {
 import { Content } from "antd/lib/layout/layout";
 import Table, { ColumnsType } from "antd/lib/table";
 import { FC, useEffect, useState } from "react";
-import PlacesService from "../../api/PlacesService";
-import RolesService from "../../api/RolesServise";
-import UserService from "../../api/UserServise";
-import UserForm from "../../components/forms/createForms/UserForm";
-import ModalWithForm from "../../components/ModalWithForm";
-import EllipsisText from "../../components/UI/EllipsisText";
-import SelectSearchMultiply from "../../components/UI/SelectSearchMultiply";
-import { IPlace, PlaceAdmin } from "../../models/IPlace";
-import { IRole } from "../../models/IRole";
-import { IUser } from "../../models/IUser";
+import PlacesService from "../../../api/PlacesService";
+import RolesService from "../../../api/RolesServise";
+import UserService from "../../../api/UserServise";
+import UserForm from "../../../components/forms/createForms/UserForm";
+import ModalWithForm from "../../../components/ModalWithForm";
+import EllipsisText from "../../../components/UI/EllipsisText";
+import SelectSearchMultiply from "../../../components/UI/SelectSearchMultiply";
+import { IPlace, PlaceAdmin } from "../../../models/IPlace";
+import { IRole } from "../../../models/IRole";
+import { IUser } from "../../../models/IUser";
 
 const UserSettings: FC = () => {
   const [usersData, setUsersData] = useState<IUser[]>([]);
