@@ -1,4 +1,4 @@
-import { IProgram } from "./../models/IProgram";
+import { IProgram, IProgrammReport } from "./../models/IProgram";
 import { Button } from "antd";
 import { ColumnsType } from "antd/lib/table";
 
@@ -37,5 +37,29 @@ export const columns: ColumnsType<IProgramDataType> = [
     title: "id программы в системе Навигатор",
     dataIndex: "id_nav",
     key: "id_nav",
+  },
+];
+
+export const answerCols: ColumnsType<IProgrammReport> = [
+  {
+    title: "Наименование",
+    dataIndex: "name",
+    key: "name",
+    defaultSortOrder: "descend",
+    sorter: (a, b) => {
+      let strA = a.name.toLowerCase();
+      let strB = b.name.toLowerCase();
+      if (strA < strB) return -1;
+      if (strA > strB) return 1;
+      return 0;
+    },
+  },
+  { title: "Направление обучения", dataIndex: "direction", key: "direction" },
+  { title: "Возраст от", dataIndex: "start_age", key: "start_age" },
+  { title: "До", dataIndex: "end_age", key: "end_age" },
+  {
+    title: "id программы в системе Навигатор",
+    dataIndex: "navigator_id",
+    key: "navigator_id",
   },
 ];

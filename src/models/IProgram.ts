@@ -10,4 +10,4 @@ export interface IProgram {
   navigator_id: number;
 }
 
-export type IProgramAnswer = Omit<IProgram, "school">;
+export type IProgrammReport = Omit<IProgram, "school">;

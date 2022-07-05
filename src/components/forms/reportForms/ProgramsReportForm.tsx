@@ -1,11 +1,14 @@
 import { Button, Form, FormInstance, InputNumber, Table, Tooltip } from "antd";
 import React, { useState } from "react";
-import { columns, IProgramDataType } from "../../../data/tableData";
+import { answerCols, columns, IProgramDataType } from "../../../data/tableData";
 import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { IProgram } from "../../../models/IProgram";
+import { IProgram, IProgrammReport } from "../../../models/IProgram";
+import { IAnswerItem } from "../../../models/IAnswer";
+import { useForm } from "antd/lib/form/Form";
 type Props = {
-  form: FormInstance<any>;
-  programs: IProgramDataType[];
+  //form: FormInstance<any>;
+  programs: IProgramDataType[] | IProgrammReport[];
+  answerItem: IAnswerItem;
 };
 
 const onSend = (values: any) => {
@@ -14,7 +17,11 @@ const onSend = (values: any) => {
 
 const ProgramsReportForm = (props: Props) => {
   const [disabledRows, setDisabledRows] = useState<number[]>([]);
-  const { form, programs } = props;
+  // const { form, programs } = props;
+
+  const { answerItem, programs } = props;
+
+  const [form] = useForm();
 
   const save = () => {
     form
@@ -66,7 +73,7 @@ const ProgramsReportForm = (props: Props) => {
           </Tooltip>
         ),
     },
-    ...columns,
+    ...answerCols,
     {
       title: "Количество детей",
       dataIndex: "num",

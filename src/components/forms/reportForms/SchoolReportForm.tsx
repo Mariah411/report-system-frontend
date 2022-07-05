@@ -6,10 +6,12 @@ import {
   InputNumber,
   Typography,
 } from "antd";
-import React from "react";
+import { useForm } from "antd/lib/form/Form";
+import { IAnswerItem } from "../../../models/IAnswer";
 import { rules } from "../../../utils/rules";
 type Props = {
-  form: FormInstance<any>;
+  answerItem: IAnswerItem;
+  //form: FormInstance<any>;
 };
 
 const onSend = (values: any) => {
@@ -17,13 +19,17 @@ const onSend = (values: any) => {
 };
 
 const SchoolReportForm = (props: Props) => {
-  const { form } = props;
+  // const { form } = props;
+
+  const { answerItem } = props;
+
+  const [form] = useForm();
 
   const save = () => {
     form
       .validateFields()
       .then((values: any) => {
-        form.resetFields();
+        //form.resetFields();
         onSend(values);
       })
       .catch((info: any) => {
@@ -37,19 +43,14 @@ const SchoolReportForm = (props: Props) => {
         Количество обучающихся по техническим направленностям
       </Typography.Text>
       <Input.Group compact>
-        <Form.Item
-          name="school_DOOP"
-          label="по ДО(О)П"
-          rules={[rules.required()]}
-        >
-          <InputNumber className="inputs-in-group" defaultValue={0} min={0} />
+        <Form.Item name="t7_1_c1" label="по ДО(О)П" rules={[rules.required()]}>
+          <InputNumber className="inputs-in-group" min={0} />
         </Form.Item>
-        <Form.Item
-          name="school_ADOOP"
-          label="по АДО(О)П"
-          rules={[rules.required()]}
-        >
-          <InputNumber className="inputs-in-group" defaultValue={0} min={0} />
+        <Form.Item name="t7_1_c2" label="по АДО(О)П" rules={[rules.required()]}>
+          <InputNumber className="inputs-in-group" min={0} />
+        </Form.Item>
+        <Form.Item name="t7_1_c3" label="Всего" rules={[rules.required()]}>
+          <InputNumber className="inputs-in-group" min={0} />
         </Form.Item>
       </Input.Group>
       <Button type="primary" onClick={save}>

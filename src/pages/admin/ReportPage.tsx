@@ -85,6 +85,7 @@ const ReportPage: FC = () => {
           .catch(setError);
         TaskService.getReport(id, 2)
           .then((response) => {
+            console.log(response.data);
             setTable2(response.data);
           })
           .catch(setError);
