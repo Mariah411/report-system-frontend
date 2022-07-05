@@ -18,7 +18,6 @@ import { message } from "antd";
 //с указанием какие данные принимаает, что возвращает
 interface loginResponse {
   token: string;
-
   message: string;
 }
 
