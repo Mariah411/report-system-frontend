@@ -7,7 +7,7 @@ import {
 
 export interface AnswerState {
   task_id: number;
-  answer: AnswerItemState[];
+  answer: IAnswerItem[];
 }
 
 export enum AnswerActionEnum {

@@ -1,6 +1,7 @@
 import { Card } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React, { FC } from "react";
+import { useTypedSelector } from "../hooks/useTypedSelectror";
 import { IAnswerItem } from "../models/IAnswer";
 import { IProgrammReport } from "../models/IProgram";
 import { ITaskPlaces } from "../models/ITaskPlaces";
@@ -12,36 +13,31 @@ import EllipsisText from "./UI/EllipsisText";
 type Props = {
   arr: ITaskPlaces[];
   type: number;
-  answerItems: IAnswerItem[];
-  setAnswerItems: (arg: IAnswerItem[]) => void;
+  // answerItems: IAnswerItem[];
+  // setAnswerItems: (arg: IAnswerItem[]) => void;
   //tableData?: IProgramAnswer[];
 };
 
 const CardListAnswer: FC<Props> = (props: Props) => {
-  const { arr, type, answerItems } = props;
+  const { arr, type } = props;
 
   //const [form] = useForm();
 
   const renserChildForm = (item: ITaskPlaces) => {
-    let answerItem = answerItems.find((ansIt) => ansIt.place_id === item.id);
-    const setAnswerItem = (value: IAnswerItem) => {
-      answerItem = value;
-    };
+    // let answerItem = answer.find((answIt) => answIt.place_id === item.id);
+    // const setAnswerItem = (value: IAnswerItem) => {
+    //   answerItem = value;
+    // };
 
-    if (answerItem) {
-      switch (type) {
-        case 1:
-          return <AreaReportForm answerItem={answerItem} />;
-        case 2:
-          return <SchoolReportForm answerItem={answerItem} />;
-        case 3:
-          return (
-            <ProgramsReportForm
-              answerItem={answerItem}
-              programs={item.programms}
-            />
-          );
-      }
+    switch (type) {
+      case 1:
+        return <AreaReportForm place_id={item.id} />;
+      case 2:
+        return <SchoolReportForm place_id={item.id} />;
+      case 3:
+        return (
+          <ProgramsReportForm place_id={item.id} programs={item.programms} />
+        );
     }
     return <>Произошла ошибка при загрузке формы</>;
   };

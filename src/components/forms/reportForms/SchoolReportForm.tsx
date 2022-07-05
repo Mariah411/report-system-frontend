@@ -7,30 +7,43 @@ import {
   Typography,
 } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { IAnswerItem } from "../../../models/IAnswer";
+import { useActions } from "../../../hooks/useActions";
+import { useTypedSelector } from "../../../hooks/useTypedSelectror";
+import { IAnswerItem, IPlaceAnswer } from "../../../models/IAnswer";
 import { rules } from "../../../utils/rules";
 type Props = {
-  answerItem: IAnswerItem;
+  place_id: number;
+  // answerItem: IAnswerItem;
   //form: FormInstance<any>;
 };
 
-const onSend = (values: any) => {
-  console.log("Данные по учреждению", values);
-};
-
 const SchoolReportForm = (props: Props) => {
-  // const { form } = props;
+  const { place_id } = props;
 
-  const { answerItem } = props;
+  const AnswerState = useTypedSelector((state) => state.answer);
+  const { setPlaceDataForPlace } = useActions();
 
   const [form] = useForm();
+
+  const onSend = () => {
+    const formData = form.getFieldsValue();
+    const formKeys = Object.keys(formData);
+
+    const newData: IPlaceAnswer[] = formKeys.map((key) => ({
+      code_name: key,
+      value: formData[key],
+    }));
+    console.log(newData);
+
+    setPlaceDataForPlace(AnswerState, place_id, newData);
+  };
 
   const save = () => {
     form
       .validateFields()
       .then((values: any) => {
         //form.resetFields();
-        onSend(values);
+        onSend();
       })
       .catch((info: any) => {
         console.log("Ошибки валидации:", info);

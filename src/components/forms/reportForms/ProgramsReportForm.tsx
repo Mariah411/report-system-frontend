@@ -3,32 +3,49 @@ import React, { useState } from "react";
 import { answerCols, columns, IProgramDataType } from "../../../data/tableData";
 import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { IProgram, IProgrammReport } from "../../../models/IProgram";
-import { IAnswerItem } from "../../../models/IAnswer";
+import { IAnswerItem, IProgrammAnswer } from "../../../models/IAnswer";
 import { useForm } from "antd/lib/form/Form";
+import { useTypedSelector } from "../../../hooks/useTypedSelectror";
+import { useActions } from "../../../hooks/useActions";
 type Props = {
+  place_id: number;
   //form: FormInstance<any>;
   programs: IProgramDataType[] | IProgrammReport[];
-  answerItem: IAnswerItem;
-};
-
-const onSend = (values: any) => {
-  console.log("Данные по программам", values);
+  // answerItem: IAnswerItem;
 };
 
 const ProgramsReportForm = (props: Props) => {
   const [disabledRows, setDisabledRows] = useState<number[]>([]);
   // const { form, programs } = props;
 
-  const { answerItem, programs } = props;
+  const { programs, place_id } = props;
+
+  const AnswerState = useTypedSelector((state) => state.answer);
+
+  const { setProgrammDataForPlace } = useActions();
 
   const [form] = useForm();
+
+  const onSend = () => {
+    const formData = form.getFieldsValue();
+    //console.log(formData);
+    const formKeys = Object.keys(formData);
+
+    const newData: IProgrammAnswer[] = formKeys.map((key) => ({
+      programm_id: +key,
+      value: formData[key],
+    }));
+    console.log(newData);
+
+    setProgrammDataForPlace(AnswerState, place_id, newData);
+  };
 
   const save = () => {
     form
       .validateFields()
       .then((values: any) => {
         //form.resetFields();
-        onSend(values);
+        onSend();
       })
       .catch((info: any) => {
         console.log("Ошибки валидации:", info);
@@ -88,6 +105,7 @@ const ProgramsReportForm = (props: Props) => {
   return (
     <Form form={form} component={false}>
       <Table
+        pagination={false}
         rowClassName={(record) =>
           isDisabled(record.id) ? "table-row-disabled" : "table-row-light"
         }

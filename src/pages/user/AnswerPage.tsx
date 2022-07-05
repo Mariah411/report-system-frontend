@@ -9,6 +9,8 @@ import TaskService from "../../api/TaskServise";
 import CardListAnswer from "../../components/CardListAnswer";
 import StepsButtons from "../../components/StepsButtons";
 import { IProgramDataType } from "../../data/tableData";
+import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelectror";
 
 import { IAnswerItem } from "../../models/IAnswer";
 import { ITaskPlaces } from "../../models/ITaskPlaces";
@@ -22,7 +24,9 @@ const AnswerPage: FC = () => {
 
   const [answerForm] = useForm();
 
-  const [answerItems, setAnswerItems] = useState<IAnswerItem[]>([]);
+  //const [answerItems, setAnswerItems] = useState<IAnswerItem[]>([]);
+  const { task_id, answer } = useTypedSelector((state) => state.answer);
+  const { setTaskAndAnswer, setAnswer, setTask } = useActions();
 
   const getAreas = (response: AxiosResponse<ITaskPlaces[]>) => {
     return response.data.filter((item) => item.place_type.id === 1);
@@ -41,7 +45,8 @@ const AnswerPage: FC = () => {
         programm_data: [],
       });
     });
-    setAnswerItems(newAnswerItems);
+
+    setAnswer(newAnswerItems);
   };
 
   useEffect(() => {
@@ -57,9 +62,15 @@ const AnswerPage: FC = () => {
     };
 
     getData();
+    if (id) setTask(+id);
   }, []);
 
   const sendData = () => {
+    const data = {
+      task_id: task_id,
+      answer: answer,
+    };
+    console.log(data);
     message.success("Отчет отправлен!");
   };
 
@@ -80,34 +91,22 @@ const AnswerPage: FC = () => {
     {
       title: "Отчет по районам",
       content: (
-        <CardListAnswer
-          answerItems={answerItems}
-          setAnswerItems={setAnswerItems}
-          arr={areas}
-          type={1}
-        />
+        // <></>
+        <CardListAnswer arr={areas} type={1} />
       ),
     },
     {
       title: "Отчет по учреждениям",
       content: (
-        <CardListAnswer
-          answerItems={answerItems}
-          setAnswerItems={setAnswerItems}
-          arr={schools}
-          type={2}
-        />
+        // <></>
+        <CardListAnswer arr={schools} type={2} />
       ),
     },
     {
       title: "Отчет по образовательным программам",
       content: (
-        <CardListAnswer
-          answerItems={answerItems}
-          setAnswerItems={setAnswerItems}
-          arr={schools}
-          type={3}
-        />
+        // <></>
+        <CardListAnswer arr={schools} type={3} />
       ),
     },
   ];
